@@ -1,0 +1,12 @@
+sqoop import --connect jdbc:mysql://hadoop102:3306/gmall?useSSL=false \
+--username root --password 000000 \
+--table user_info	 \
+--columns 'id,login_name' \
+--where 'id between 10 and 20' \
+--null-string '\\N' \
+--null-non-string '\\N' \
+--delete-target-dir \
+--target-dir '/origin_data/gmall/db/user_ifno' \
+-z --compression-codec lzop \
+--fetch-size 1000 \
+--fields-terminated-by '\t'

@@ -2,7 +2,7 @@
 
 ## download
 
-## commoand
+## command
 
 ```shell script
 sqoop list-databases --connect jdbc:mysql://hadoop102:3306?useSSL=false \
