@@ -1,3 +1,5 @@
+[Parent](../README.md)
+
 # Hadoop集群搭建
 
 ## 步骤描述
