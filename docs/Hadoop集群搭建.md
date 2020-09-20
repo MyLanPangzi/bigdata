@@ -1,4 +1,30 @@
 [Parent](../README.md)
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Hadoop集群搭建](#hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA)
+  - [步骤描述](#%E6%AD%A5%E9%AA%A4%E6%8F%8F%E8%BF%B0)
+  - [前置条件](#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6)
+    - [安装rsync工具](#%E5%AE%89%E8%A3%85rsync%E5%B7%A5%E5%85%B7)
+    - [关闭防火墙](#%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99)
+    - [Hosts文件配置](#hosts%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE)
+    - [编写分发脚本xsync.sh](#%E7%BC%96%E5%86%99%E5%88%86%E5%8F%91%E8%84%9A%E6%9C%ACxsyncsh)
+    - [编写集群命令调用脚本](#%E7%BC%96%E5%86%99%E9%9B%86%E7%BE%A4%E5%91%BD%E4%BB%A4%E8%B0%83%E7%94%A8%E8%84%9A%E6%9C%AC)
+  - [安装JDK](#%E5%AE%89%E8%A3%85jdk)
+  - [安装Hadoop](#%E5%AE%89%E8%A3%85hadoop)
+  - [修改Hadoop配置文件](#%E4%BF%AE%E6%94%B9hadoop%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+    - [core-site.xml](#core-sitexml)
+    - [hdfs-site.xml](#hdfs-sitexml)
+    - [mapred-site.xml](#mapred-sitexml)
+    - [yarn-site.xml](#yarn-sitexml)
+    - [workers](#workers)
+  - [初始化集群](#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%9B%86%E7%BE%A4)
+  - [集群启停脚本](#%E9%9B%86%E7%BE%A4%E5%90%AF%E5%81%9C%E8%84%9A%E6%9C%AC)
+  - [验证集群](#%E9%AA%8C%E8%AF%81%E9%9B%86%E7%BE%A4)
+  - [参考链接](#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 # Hadoop集群搭建
 
