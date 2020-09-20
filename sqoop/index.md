@@ -1,5 +1,0 @@
-# Sqoop
-
-## download
-
-## command
