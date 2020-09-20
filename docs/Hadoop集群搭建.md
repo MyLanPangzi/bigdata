@@ -374,3 +374,8 @@ esac
 * History：http://hadoop102:19888
 * YARN：http://hadoop103:8088
 * SNN：http://hadoop104:9868
+
+## 参考链接
+
+* [Hadoop3.1.4单节点安装](https://hadoop.apache.org/docs/r3.1.4/hadoop-project-dist/hadoop-common/SingleCluster.html)
+* [Hadoop3.1.4集群安装](https://hadoop.apache.org/docs/r3.1.4/hadoop-project-dist/hadoop-common/ClusterSetup.html)
