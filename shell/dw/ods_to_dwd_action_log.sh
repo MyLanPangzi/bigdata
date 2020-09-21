@@ -10,7 +10,7 @@ echo "$hive"
 app=gmall
 sql="
 SET hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
-insert overwrite table $app.dwd_error_log partition (dt = '$day')
+insert overwrite table $app.dwd_action_log partition (dt = '$day')
 select get_json_object(line, '$.common.ar'),
        get_json_object(line, '$.common.ba'),
        get_json_object(line, '$.common.ch'),
@@ -25,18 +25,12 @@ select get_json_object(line, '$.common.ar'),
        get_json_object(line, '$.page.last_page_id'),
        get_json_object(line, '$.page.page_id'),
        get_json_object(line, '$.page.sourceType'),
-       get_json_object(line, '$.start.entry'),
-       get_json_object(line, '$.start.loading_time'),
-       get_json_object(line, '$.start.open_ad_id'),
-       get_json_object(line, '$.start.open_ad_ms'),
-       get_json_object(line, '$.start.open_ad_skip_ms'),
-       get_json_object(line, '$.actions'),
-       get_json_object(line, '$.displays'),
-       get_json_object(line, '$.err.error_code'),
-       get_json_object(line, '$.err.msg'),
-       get_json_object(line, '$.ts')
-from $app.ods_log
-where get_json_object(line, '$.err') is not null
+       get_json_object(line, '$.action.action_id'),
+       get_json_object(action, '$.item'),
+       get_json_object(action, '$.item_type'),
+       get_json_object(action, '$.ts')
+from $app.ods_log lateral view $app.explode_json_array(get_json_object(line, '$.actions')) tmp as action
+where get_json_object(line, '$.actions') is not null
   and dt = '$day';
 "
 echo "$sql"
