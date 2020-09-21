@@ -1,0 +1,73 @@
+{
+  "common": {
+    "ar": "420000",
+    "ba": "vivo",
+    "ch": "oppo",
+    "md": "vivo iqoo3",
+    "mid": "mid_491",
+    "os": "Android 11.0",
+    "uid": "265",
+    "vc": "v2.1.134"
+  },
+  "displays": [
+    {
+      "displayType": "activity",
+      "item": "2",
+      "item_type": "activity_id",
+      "order": 1
+    },
+    {
+      "displayType": "activity",
+      "item": "1",
+      "item_type": "activity_id",
+      "order": 2
+    },
+    {
+      "displayType": "query",
+      "item": "5",
+      "item_type": "sku_id",
+      "order": 3
+    },
+    {
+      "displayType": "query",
+      "item": "5",
+      "item_type": "sku_id",
+      "order": 4
+    },
+    {
+      "displayType": "query",
+      "item": "4",
+      "item_type": "sku_id",
+      "order": 5
+    },
+    {
+      "displayType": "query",
+      "item": "6",
+      "item_type": "sku_id",
+      "order": 6
+    },
+    {
+      "displayType": "query",
+      "item": "4",
+      "item_type": "sku_id",
+      "order": 7
+    },
+    {
+      "displayType": "query",
+      "item": "3",
+      "item_type": "sku_id",
+      "order": 8
+    },
+    {
+      "displayType": "query",
+      "item": "7",
+      "item_type": "sku_id",
+      "order": 9
+    }
+  ],
+  "page": {
+    "during_time": 14310,
+    "page_id": "home"
+  },
+  "ts": 1592109396290
+}

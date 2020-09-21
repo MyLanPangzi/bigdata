@@ -86,11 +86,11 @@ create external table dwd_display_log
     `last_page_id`   string comment '上页类型',
     `page_id`        string comment '页面id ',
     `source_type`    string comment '来源类型',
-    `ts`             bigint comment 'app版本号',
     `display_type`   string comment '曝光类型',
     `item`           string comment '曝光对象id ',
     `item_type`      string comment 'app版本号',
-    `order`          bigint comment '出现顺序'
+    `order`          bigint comment '出现顺序',
+    `ts`             bigint comment 'app版本号'
 ) comment '曝光日志表'
     partitioned by (dt string)
     stored as parquet
@@ -119,9 +119,9 @@ create external table dwd_error_log
     `open_ad_skip_ms` string comment '用户跳过广告时点',
     `actions`         string comment '动作',
     `displays`        string comment '曝光',
-    `ts`              string comment '时间',
     `error_code`      string comment '错误码',
-    `msg`             string comment '错误信息'
+    `msg`             string comment '错误信息',
+    `ts`              string comment '时间'
 ) comment '错误日志表'
     partitioned by (dt string)
     stored as parquet
