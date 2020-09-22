@@ -34,6 +34,30 @@ case $1 in
 "dwd_dim_activity_info")
   sql=$(/home/atguigu/bin/ods_to_dwd_dim_activity_info.sh $day)
   ;;
+"dwd_dim_base_province")
+  sql=$(/home/atguigu/bin/ods_to_dwd_dim_base_province.sh)
+  ;;
+"dwd_fact_payment_info")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_payment_info.sh $day)
+  ;;
+"dwd_fact_refund_info")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_refund_info.sh $day)
+  ;;
+"dwd_fact_comment_info")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_comment_info.sh $day)
+  ;;
+"dwd_fact_cart_info")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_cart_info.sh $day)
+  ;;
+"dwd_fact_order_detail")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_order_detail.sh $day)
+  ;;
+"dwd_fact_coupon_use")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_coupon_use.sh $day)
+  ;;
+"dwd_fact_order_info")
+  sql=$(/home/atguigu/bin/ods_to_dwd_fact_order_info.sh $day)
+  ;;
 esac
 
 echo "$sql"
