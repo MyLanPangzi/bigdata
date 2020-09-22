@@ -19,6 +19,9 @@
 
 ## MySQL
 
-
-
 ## Sqoop
+
+## Hive
+
+
+- [Hive疑难杂症](docs/Hive疑难杂症.md)
