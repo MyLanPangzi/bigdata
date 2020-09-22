@@ -4,7 +4,7 @@ day=$2
 if [ -z "$day" ]; then
     day=$(date -d '-1 day' +%F)
 fi
-echo "$day"
+
 sqoop=/opt/module/sqoop/bin/sqoop
 echo "$sqoop"
 table=$1

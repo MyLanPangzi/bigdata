@@ -4,12 +4,10 @@ day=$1
 if [ -z "$day" ]; then
   day=$(date -d '-1 day' +%F)
 fi
-echo "$day"
-hive=/opt/module/hive/bin/hive
-echo "$hive"
+
+
 app=gmall
 sql="
-SET hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
 insert overwrite table $app.dwd_error_log partition (dt = '$day')
 select get_json_object(line, '$.common.ar'),
        get_json_object(line, '$.common.ba'),
@@ -40,4 +38,3 @@ where get_json_object(line, '$.err') is not null
   and dt = '$day';
 "
 echo "$sql"
-hive -e "$sql"

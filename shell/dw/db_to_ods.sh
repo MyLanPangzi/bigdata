@@ -4,7 +4,7 @@ day=$2
 if [ -z "$day" ]; then
     day=$(date -d '-1 day' +%F)
 fi
-echo "$day"
+
 hive=/opt/module/hive/bin/hive
 echo "$hive"
 app=gmall
