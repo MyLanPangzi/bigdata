@@ -58,6 +58,9 @@ case $1 in
 "dwd_fact_order_info")
   sql=$(/home/atguigu/bin/ods_to_dwd_fact_order_info.sh $day)
   ;;
+"dwd_dim_user_info")
+  sql=$(/home/atguigu/bin/ods_to_dwd_dim_user_info.sh $day)
+  ;;
 esac
 
 echo "$sql"

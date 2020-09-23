@@ -23,7 +23,7 @@
 
 ## Hive
 
-- [Hive疑难杂症](docs/Hive疑难杂症.md)
+- [Hive技巧](docs/Hive技巧.md)
 
 ## 其他
 

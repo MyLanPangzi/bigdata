@@ -256,3 +256,40 @@ create table dwd_fact_order_info
     stored as parquet
     location '/warehouse/gmall/dwd/dwd_fact_order_info'
     tblproperties ('parquet.compression' = 'lzo');
+drop table if exists dwd_dim_user_info;
+create table dwd_dim_user_info
+(
+    `id`           string COMMENT '用户id',
+    `name`         string COMMENT '姓名',
+    `birthday`     string COMMENT '生日',
+    `gender`       string COMMENT '性别',
+    `email`        string COMMENT '邮箱',
+    `user_level`   string COMMENT '用户等级',
+    `create_time`  string COMMENT '创建时间',
+    `operate_time` string COMMENT '操作时间',
+    `start_time`   string comment '有效开始时间',
+    `end_time`     string comment '有效结束时间'
+)
+    stored as parquet
+    location '/warehouse/gmall/dwd/dwd_dim_user_info'
+    tblproperties ('parquet.compression' = 'lzo');
+drop table if exists dwd_dim_user_info_tmp;
+create table dwd_dim_user_info_tmp
+(
+    `id`           string COMMENT '用户id',
+    `name`         string COMMENT '姓名',
+    `birthday`     string COMMENT '生日',
+    `gender`       string COMMENT '性别',
+    `email`        string COMMENT '邮箱',
+    `user_level`   string COMMENT '用户等级',
+    `create_time`  string COMMENT '创建时间',
+    `operate_time` string COMMENT '操作时间',
+    `start_time`   string comment '有效开始时间',
+    `end_time`     string comment '有效结束时间'
+)
+    stored as parquet
+    location '/warehouse/gmall/dwd/dwd_dim_user_info_tmp'
+    tblproperties ('parquet.compression' = 'lzo');
+select *
+from dwd_dim_user_info
+order by id;
