@@ -191,6 +191,22 @@ create table dwd_fact_cart_info
     stored as parquet
     location '/warehouse/gmall/dwd/dwd_fact_cart_info'
     tblproperties ('parquet.compression' = 'lzo');
+drop table if exists dwd_fact_favor_info;
+create table dwd_fact_favor_info
+(
+
+    id          string,
+    user_id     string,
+    sku_id      string,
+    spu_id      string,
+    is_cancel   string,
+    create_time string,
+    cancel_time string
+)
+    partitioned by (dt string)
+    stored as parquet
+    location '/warehouse/gmall/dwd/dwd_fact_favor_info'
+    tblproperties ('parquet.compression' = 'lzo');
 drop table if exists dwd_fact_order_detail;
 create table dwd_fact_order_detail
 (

@@ -49,9 +49,6 @@ case $1 in
 "dwd_fact_cart_info")
   sql=$(/home/atguigu/bin/ods_to_dwd_fact_cart_info.sh $day)
   ;;
-"dwd_fact_favor_info")
-  sql=$(/home/atguigu/bin/ods_to_dwd_fact_favor_info.sh $day)
-  ;;
 "dwd_fact_order_detail")
   sql=$(/home/atguigu/bin/ods_to_dwd_fact_order_detail.sh $day)
   ;;
@@ -63,39 +60,6 @@ case $1 in
   ;;
 "dwd_dim_user_info")
   sql=$(/home/atguigu/bin/ods_to_dwd_dim_user_info.sh $day)
-  ;;
-"first")
-  sql="
-  $(/home/atguigu/bin/ods_to_dwd_dim_base_province.sh)
-  $(/home/atguigu/bin/ods_to_dwd_dim_sku.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_dim_coupon.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_dim_activity_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_payment_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_refund_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_comment_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_cart_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_favor_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_order_detail.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_coupon_use.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_order_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_dim_user_info.sh $day)
-  "
-  ;;
-"all")
-  sql="
-  $(/home/atguigu/bin/ods_to_dwd_dim_sku.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_dim_coupon.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_dim_activity_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_payment_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_refund_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_comment_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_cart_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_favor_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_order_detail.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_coupon_use.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_fact_order_info.sh $day)
-  $(/home/atguigu/bin/ods_to_dwd_dim_user_info.sh $day)
-  "
   ;;
 esac
 
