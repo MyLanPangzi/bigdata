@@ -10,15 +10,14 @@ echo "$hive"
 
 sql=""
 case $1 in
-"dws_uv_detail_daycount")
-  sql=$(/home/atguigu/bin/dwd_to_dws_uv_detail_daycount.sh $day)
+"dwt_uv_topic")
+  sql=$(/home/atguigu/bin/dws_to_dwt_uv_topic.sh $day)
   ;;
 esac
 
 echo "$sql"
 
 hive -e "
-SET hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
 $sql
 "
 
