@@ -17,5 +17,7 @@ ods_to_dwd.sh first 2020-06-14
 ods_to_dwd.sh all 2020-06-15
 
 dwd_to_dws.sh dws_uv_detail_daycount 2020-06-14
+dwd_to_dws.sh dws_user_action_daycount 2020-06-14
 
 dws_to_dwt.sh dwt_uv_topic 2020-06-14
+dws_to_dwt.sh dwt_user_topic 2020-06-14

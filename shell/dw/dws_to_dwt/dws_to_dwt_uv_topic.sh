@@ -24,7 +24,7 @@ with old as (select mid_id,
          from $app.dws_uv_detail_daycount
          where dt = '$day'
      )
-insert overwrite table $app.dwt_uv_topic
+insert into table $app.dwt_uv_topic
 select nvl(new.mid_id, old.mid_id),
        nvl(new.brand, old.brand),
        nvl(new.model, old.model),

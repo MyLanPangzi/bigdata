@@ -28,4 +28,5 @@
 ## 其他
 
 - [编程语言学习指南](docs/编程语言学习指南.md)
+- [Linux opens too many files](docs/文件打开过多.md)
 

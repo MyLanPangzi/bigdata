@@ -13,6 +13,9 @@ case $1 in
 "dwt_uv_topic")
   sql=$(/home/atguigu/bin/dws_to_dwt_uv_topic.sh $day)
   ;;
+"dwt_user_topic")
+  sql=$(/home/atguigu/bin/dws_to_dwt_user_topic.sh $day)
+  ;;
 esac
 
 echo "$sql"
