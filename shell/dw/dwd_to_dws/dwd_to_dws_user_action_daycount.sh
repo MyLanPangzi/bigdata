@@ -41,7 +41,7 @@ with login as (
                 sum(if(date_format(payment_time, 'yyyy-MM-dd') = '$day', 1, 0))                  payment_count,
                 sum(if(date_format(payment_time, 'yyyy-MM-dd') = '$day', final_total_amount, 0)) payment_amount
          from $app.dwd_fact_order_info
-         where (dt = '$day' or dt = '2020-06-13')
+         where (dt = '$day' or dt = date_sub('$day', 1))
          group by user_id
      ),
      detail as (
