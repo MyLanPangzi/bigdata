@@ -19,6 +19,12 @@ case $1 in
 "dws_sku_action_daycount")
   sql=$(/home/atguigu/bin/dwd_to_dws_sku_action_daycount.sh $day)
   ;;
+"dws_area_stats_daycount")
+  sql=$(/home/atguigu/bin/dwd_to_dws_area_stats_daycount.sh $day)
+  ;;
+"dws_activity_info_daycount")
+  sql=$(/home/atguigu/bin/dwd_to_dws_activity_info_daycount.sh $day)
+  ;;
 esac
 
 echo "$sql"

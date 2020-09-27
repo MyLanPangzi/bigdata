@@ -54,3 +54,42 @@ create table dws_sku_action_daycount
     location '/warehouse/gmall/dws/dws_sku_action_daycount/'
     tblproperties ("parquet.compression" = "lzo");
 truncate table dws_sku_action_daycount;
+drop table if exists dws_activity_info_daycount;
+create table dws_activity_info_daycount
+(
+    `id`             string COMMENT '编号',
+    `activity_name`  string COMMENT '活动名称',
+    `activity_type`  string COMMENT '活动类型',
+    `start_time`     string COMMENT '开始时间',
+    `end_time`       string COMMENT '结束时间',
+    `create_time`    string COMMENT '创建时间',
+    `display_count`  bigint COMMENT '曝光次数',
+    `order_count`    bigint COMMENT '下单次数',
+    `order_amount`   decimal(20, 2) COMMENT '下单金额',
+    `payment_count`  bigint COMMENT '支付次数',
+    `payment_amount` decimal(20, 2) COMMENT '支付金额'
+) COMMENT '每日活动统计'
+    PARTITIONED BY (`dt` string)
+    stored as parquet
+    location '/warehouse/gmall/dws/dws_activity_info_daycount/'
+    tblproperties ("parquet.compression" = "lzo");
+truncate table dws_activity_info_daycount;
+drop table if exists dws_area_stats_daycount;
+create table dws_area_stats_daycount
+(
+    `id`             bigint COMMENT '编号',
+    `province_name`  string COMMENT '省份名称',
+    `area_code`      string COMMENT '地区编码',
+    `iso_code`       string COMMENT 'iso编码',
+    `region_id`      string COMMENT '地区ID',
+    `region_name`    string COMMENT '地区名称',
+    `login_count`    string COMMENT '活跃设备数',
+    `order_count`    bigint COMMENT '下单次数',
+    `order_amount`   decimal(20, 2) COMMENT '下单金额',
+    `payment_count`  bigint COMMENT '支付次数',
+    `payment_amount` decimal(20, 2) COMMENT '支付金额'
+) COMMENT '每日地区统计表'
+    PARTITIONED BY (`dt` string)
+    stored as parquet
+    location '/warehouse/gmall/dws/dws_area_stats_daycount/'
+    tblproperties ("parquet.compression" = "lzo");
