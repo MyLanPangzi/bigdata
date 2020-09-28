@@ -24,4 +24,6 @@ dwd_to_dws.sh dws_activity_info_daycount 2020-06-14
 
 dws_to_dwt.sh dwt_uv_topic 2020-06-14
 dws_to_dwt.sh dwt_user_topic 2020-06-14
-dws_to_dwt.sh dwt_sku_topic 2020-06-14
+dws_to_dwt.sh dwt_sku_topic 2020-06-15
+dws_to_dwt.sh dwt_area_topic 2020-06-15
+dws_to_dwt.sh dwt_activity_topic 2020-06-15

@@ -83,7 +83,7 @@ create table dws_area_stats_daycount
     `iso_code`       string COMMENT 'iso编码',
     `region_id`      string COMMENT '地区ID',
     `region_name`    string COMMENT '地区名称',
-    `login_count`    string COMMENT '活跃设备数',
+    `login_count`    bigint COMMENT '活跃设备数',
     `order_count`    bigint COMMENT '下单次数',
     `order_amount`   decimal(20, 2) COMMENT '下单金额',
     `payment_count`  bigint COMMENT '支付次数',
