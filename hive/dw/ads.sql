@@ -91,3 +91,119 @@ select '2020-06-16'                                                             
        sum(if(login_first_day = date_sub('2020-06-16', 3), 1, 0)) /
        sum(if(login_first_day = '2020-06-16', 1, 0)) * 100                                          retention_ratio
 from dwt_uv_topic;
+
+-- 只在安装当天启动过，且启动时间是在7天前
+drop table if exists ads_silent_count;
+create external table ads_silent_count
+(
+    `dt`           string COMMENT '统计日期',
+    `silent_count` bigint COMMENT '沉默设备数'
+) COMMENT '沉默用户数'
+    row format delimited fields terminated by '\t'
+    location '/warehouse/gmall/ads/ads_silent_count';
+insert overwrite table ads_silent_count
+select *
+from ads_silent_count
+union all
+select '2020-06-14' dt,
+       count(*)     silent_count
+from dwt_uv_topic
+where login_last_day = login_first_day
+  and login_first_day < date_sub('2020-06-14', 7);
+
+-- 本周回流用户数
+-- 上周未活跃，本周活跃的设备，且不是本周新增设备
+drop table if exists ads_back_count;
+create external table ads_back_count
+(
+    `dt`            string COMMENT '统计日期',
+    `wk_dt`         string COMMENT '统计日期所在周',
+    `wastage_count` bigint COMMENT '回流设备数'
+) COMMENT '本周回流用户数'
+    row format delimited fields terminated by '\t'
+    location '/warehouse/gmall/ads/ads_back_count';
+insert overwrite table ads_back_count
+select *
+from ads_back_count
+union all
+select '2020-06-14'                                                                                         dt,
+       concat(date_sub(next_day('2020-06-14', 'Monday'), 7), date_sub(next_day('2020-06-14', 'Monday'), 1)) wk_dt,
+       count(*)                                                                                             wastage_count
+from dwt_uv_topic
+where login_first_day < date_sub('2020-06-14', 7)
+  and login_last_day between date_sub(next_day('2020-06-14', 'Monday'), 7) and date_sub(next_day('2020-06-14', 'Monday'), 1)
+  and mid_id not in (
+    select mid_id
+    from dws_uv_detail_daycount
+    where dt between date_sub(next_day('2020-06-14', 'Monday'), 14) and date_sub(next_day('2020-06-14', 'Monday'), 8)
+    group by mid_id
+);
+
+-- 最近连续三周活跃用户数
+drop table if exists ads_continuity_wk_count;
+create external table ads_continuity_wk_count
+(
+    `dt`               string COMMENT '统计日期,一般用结束周周日日期,如果每天计算一次,可用当天日期',
+    `wk_dt`            string COMMENT '持续时间',
+    `continuity_count` bigint COMMENT '活跃数'
+) COMMENT '最近连续三周活跃用户数'
+    row format delimited fields terminated by '\t'
+    location '/warehouse/gmall/ads/ads_continuity_wk_count';
+with one as (
+    select mid_id
+    from dws_uv_detail_daycount
+    where dt between date_sub(next_day('2020-06-14', 'Monday'), 7) and date_sub(next_day('2020-06-14', 'Monday'), 1)
+    group by mid_id
+),
+     two as (
+         select mid_id
+         from dws_uv_detail_daycount
+         where dt between date_sub(next_day('2020-06-14', 'Monday'), 7 * 2) and date_sub(next_day('2020-06-14', 'Monday'), 7 + 1)
+         group by mid_id
+     ),
+     three as (
+         select mid_id
+         from dws_uv_detail_daycount
+         where dt between date_sub(next_day('2020-06-14', 'Monday'), 7 * 3) and date_sub(next_day('2020-06-14', 'Monday'), 7 * 2 + 1)
+         group by mid_id
+     )
+insert
+overwrite
+table
+ads_continuity_wk_count
+select *
+from ads_continuity_wk_count
+union all
+select '2020-06-14'                                                                                         dt,
+       concat(date_sub(next_day('2020-06-14', 'Monday'), 7), date_sub(next_day('2020-06-14', 'Monday'), 1)) wk_dt,
+       count(*)                                                                                             continuity_count
+from one
+         inner join two on one.mid_id = two.mid_id
+         inner join three on one.mid_id = three.mid_id;
+
+drop table if exists ads_continuity_uv_count;
+create external table ads_continuity_uv_count
+(
+    `dt`               string COMMENT '统计日期',
+    `wk_dt`            string COMMENT '最近7天日期',
+    `continuity_count` bigint
+) COMMENT '最近七天内连续三天活跃用户数'
+    row format delimited fields terminated by '\t'
+    location '/warehouse/gmall/ads/ads_continuity_uv_count';
+insert overwrite table ads_continuity_uv_count
+select *
+from ads_continuity_uv_count
+union all
+select '2020-06-14'                                                                                         dt,
+       concat(date_sub(next_day('2020-06-14', 'Monday'), 7), date_sub(next_day('2020-06-14', 'Monday'), 1)) wk_dt,
+       count(*)                                                                                             continuity_count
+from (
+         select mid_id
+         from (
+                  select mid_id, dt, datediff(dt, lag(dt, 2, '1970-01-01') over (partition by mid_id order by dt)) diff
+                  from dws_uv_detail_daycount
+                  where dt between date_sub('2020-06-14', 7) and '2020-06-14'
+              ) t
+         where t.diff = 2
+         group by mid_id
+     ) t;
