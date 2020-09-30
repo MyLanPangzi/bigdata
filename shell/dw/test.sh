@@ -27,3 +27,25 @@ dws_to_dwt.sh dwt_user_topic 2020-06-14
 dws_to_dwt.sh dwt_sku_topic 2020-06-15
 dws_to_dwt.sh dwt_area_topic 2020-06-15
 dws_to_dwt.sh dwt_activity_topic 2020-06-15
+
+ads.sh all 2020-06-14
+ads.sh ads_appraise_bad_topN 2020-06-14
+ads.sh ads_area_topic 2020-06-14
+ads.sh ads_back_count 2020-06-14
+ads.sh ads_continuity_uv_count 2020-06-14
+ads.sh ads_continuity_wk_count 2020-06-14
+ads.sh ads_new_mid_count 2020-06-14
+ads.sh ads_order_daycount 2020-06-14
+ads.sh ads_payment_daycount 2020-06-14
+ads.sh ads_product_cart_topN 2020-06-14
+ads.sh ads_product_favor_topN 2020-06-14
+ads.sh ads_product_info 2020-06-14
+ads.sh ads_product_refund_topN 2020-06-14
+ads.sh ads_product_sale_topN 2020-06-14
+ads.sh ads_sale_tm_category1_stat_mn 2020-06-14
+ads.sh ads_silent_count 2020-06-14
+ads.sh ads_user_action_convert_day 2020-06-14
+ads.sh ads_user_retention_day_rate 2020-06-14
+ads.sh ads_user_topic 2020-06-14
+ads.sh ads_uv_count 2020-06-14
+
