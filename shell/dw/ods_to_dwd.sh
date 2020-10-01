@@ -104,6 +104,7 @@ case $1 in
    $(/home/atguigu/bin/ods_to_dwd_display_log.sh $day)
    $(/home/atguigu/bin/ods_to_dwd_page_log.sh $day)
    $(/home/atguigu/bin/ods_to_dwd_start_log.sh $day)
+   "
   ;;
 esac
 
