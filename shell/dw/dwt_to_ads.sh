@@ -38,10 +38,10 @@ case $1 in
   sql=$($cmd $day)
   ;;
 esac
-
 echo "$sql"
 
 hive -e "
 SET hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
 $sql
 "
+

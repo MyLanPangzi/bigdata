@@ -51,3 +51,11 @@ nodes:
       command: /home/atguigu/bin/dwt_to_ads.sh all ${dt}
     dependsOn:
       - dws_to_dwt
+
+  - name: hdfs_to_mysql
+    type: command
+    config:
+      command: /home/atguigu/bin/hdfs_to_mysql.sh all ${dt}
+    dependsOn:
+      - dwt_to_ads
+
