@@ -1,0 +1,53 @@
+nodes:
+  - name: mysql_to_hdfs
+    type: command
+    config:
+      command: /home/atguigu/bin/mysql_to_hdfs.sh all ${dt}
+
+  - name: db_to_ods
+    type: command
+    config:
+      command: /home/atguigu/bin/db_to_ods.sh all ${dt}
+    dependsOn:
+      - mysql_to_hdfs
+
+  - name: log_to_ods
+    type: command
+    config:
+      command: /home/atguigu/bin/log_to_ods.sh ${dt}
+
+  - name: ods_to_dwd_db
+    type: command
+    config:
+      command: /home/atguigu/bin/ods_to_dwd.sh all ${dt}
+    dependsOn:
+      - db_to_ods
+
+  - name: ods_to_dwd_log
+    type: command
+    config:
+      command: /home/atguigu/bin/ods_to_dwd.sh log ${dt}
+    dependsOn:
+      - log_to_ods
+
+  - name: dwd_to_dws
+    type: command
+    config:
+      command: /home/atguigu/bin/dwd_to_dws.sh all ${dt}
+    dependsOn:
+      - ods_to_dwd_db
+      - ods_to_dwd_log
+
+  - name: dws_to_dwt
+    type: command
+    config:
+      command: /home/atguigu/bin/dws_to_dwt.sh all ${dt}
+    dependsOn:
+      - dwd_to_dws
+
+  - name: dwt_to_ads
+    type: command
+    config:
+      command: /home/atguigu/bin/dwt_to_ads.sh all ${dt}
+    dependsOn:
+      - dws_to_dwt

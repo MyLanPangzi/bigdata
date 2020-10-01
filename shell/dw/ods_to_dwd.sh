@@ -97,6 +97,14 @@ case $1 in
   $(/home/atguigu/bin/ods_to_dwd_dim_user_info.sh $day)
   "
   ;;
+"log")
+  sql="
+   $(/home/atguigu/bin/ods_to_dwd_err_log.sh $day)
+   $(/home/atguigu/bin/ods_to_dwd_action_log.sh $day)
+   $(/home/atguigu/bin/ods_to_dwd_display_log.sh $day)
+   $(/home/atguigu/bin/ods_to_dwd_page_log.sh $day)
+   $(/home/atguigu/bin/ods_to_dwd_start_log.sh $day)
+  ;;
 esac
 
 echo "$sql"
