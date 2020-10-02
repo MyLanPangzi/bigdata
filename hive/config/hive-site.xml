@@ -45,7 +45,12 @@
         <name>hive.metastore.event.db.notification.api.auth</name>
         <value>false</value>
     </property>
-
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://hadoop102:9083</value>
+        <description>Thrift URI for the remote metastore.
+            Used by metastore client to connect to remote metastore.</description>
+    </property>
     <property>
         <name>hive.cli.print.header</name>
         <value>true</value>
