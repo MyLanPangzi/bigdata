@@ -8,11 +8,11 @@ fi
 hive=/opt/module/hive/bin/hive
 echo "$hive"
 sqoop=/opt/module/sqoop/bin/sqoop
-hive_db_name=ads
+hive_db_name=gmall
 
 function export_data() {
   $sqoop export \
-  --connect "jdbc:mysql://hadoop102:3306/gmall?useSSL=false&useUnicode=true&characterEncoding=utf-8" \
+  --connect "jdbc:mysql://hadoop102:3306/gmall_report?useSSL=false&useUnicode=true&characterEncoding=utf-8" \
   --username root \
   --password 000000 \
   --input-null-string '\\N' \

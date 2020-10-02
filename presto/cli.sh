@@ -1,0 +1,1 @@
+./prestocli --server hadoop102:8881  --catalog hive --schema gmall
