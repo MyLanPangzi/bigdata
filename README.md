@@ -25,6 +25,10 @@
 
 - [Hive技巧](docs/Hive技巧.md)
 
+## Kylin
+
+- [Kylin优化](docs/Kylin优化.md)
+
 ## 其他
 
 - [编程语言学习指南](docs/编程语言学习指南.md)
