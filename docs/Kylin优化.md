@@ -40,7 +40,7 @@
 1. 构建Cube/Cuboid，根据情况二选一
     1. by-layer 层级构建，首先构建Base Cuboid，逐层构建N-Cuboid，
         * 减少reducer输入大小，提高并行度，默认500M
-    1. by-split 快速构建，基于内存构建，mapper端聚合，非combiner，优化内存配置
+    1. by-split 快速构建，基于内存构建，mapper端聚合，非combiner，优化内存配置，默认mapper内存3个G
 1. 转换Cuboid到HFile
     * 调整region，split大小，默认5G
     * 调整HFile大小，默认2G
