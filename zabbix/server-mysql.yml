@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  server:
+    image: zabbix/zabbix-server-mysql:latest
+    container_name: zabbix-server-mysql
+    network_mode: host
+    environment:
+      DB_SERVER_HOST: '192.168.242.102'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '000000'
+
+

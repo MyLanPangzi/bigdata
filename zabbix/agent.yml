@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  server:
+    image: zabbix/zabbix-agent:latest
+    container_name: zabbix-agent
+    network_mode: host
+    privileged: true
+    environment:
+#      ZBX_HOSTNAME: '$HOSTNAME'
+      ZBX_SERVER_HOST: '192.168.242.102'
+#      ZBX_ACTIVESERVERS: '192.168.242.102'

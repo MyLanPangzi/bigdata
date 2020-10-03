@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  server:
+    image: zabbix/zabbix-web-nginx-mysql:latest
+    container_name: zabbix-web-nginx-mysql
+    ports:
+      - '10058:8080'
+    volumes:
+      - '/usr/share/zoneinfo/Asia:/usr/share/zoneinfo/Asia'
+    environment:
+      ZBX_SERVER_HOST: '192.168.242.102'
+      DB_SERVER_HOST: '192.168.242.102'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '000000'
+      PHP_TZ: Asia/Shanghai
+      TZ: Asia/Shanghai
