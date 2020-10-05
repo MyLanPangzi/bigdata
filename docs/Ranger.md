@@ -33,3 +33,10 @@
 * Apache Kafka
 * YARN
 * NIFI
+
+## 安装
+
+* admin
+* usersync
+* create service
+* enable hive plugin

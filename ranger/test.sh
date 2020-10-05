@@ -7,6 +7,6 @@ show tables;
 atguigu
 000000
 show tables;
-
+insert into student values(3,'hello');
 hdfs dfs -chmod -R 777 /hive /spark-history /spark-jars /tmp /user
 hdfs dfs -chmod -R 777 /
