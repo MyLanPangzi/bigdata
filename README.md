@@ -4,6 +4,7 @@
 
 - [数仓分层](docs/数仓分层.md)
 - [数仓概念](docs/数仓概念.md)
+- [数据质量](docs/数据质量.md)
 
 ## 集群规划
 
@@ -28,6 +29,14 @@
 ## Kylin
 
 - [Kylin优化](docs/Kylin优化.md)
+
+## Ranger
+
+- [Ranger](docs/Ranger.md)
+
+## Atlas
+
+- [Atlas](docs/Atlas.md)
 
 ## 其他
 
