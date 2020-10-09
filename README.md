@@ -38,6 +38,10 @@
 
 - [Atlas](docs/Atlas.md)
 
+## Kerberos
+
+- [Kerberos](docs/Kerberos.md)
+
 ## 其他
 
 - [编程语言学习指南](docs/编程语言学习指南.md)
