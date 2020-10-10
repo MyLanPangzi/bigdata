@@ -30,16 +30,18 @@ under the License.
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
-		<scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
 
 		<flink.version>1.11.2</flink.version>
 		<scala.binary.version>2.12</scala.binary.version>
 		<scala.version>2.12.12</scala.version>
 		<log4j.version>2.12.1</log4j.version>
+
+		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+		<scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
+		<wagon-ssh.version>3.0.0</wagon-ssh.version>
+		<wagon-maven-plugin.version>2.0.0</wagon-maven-plugin.version>
 	</properties>
 
 	<repositories>
@@ -117,8 +119,14 @@ under the License.
 	</dependencies>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>${wagon-ssh.version}</version>
+			</extension>
+		</extensions>
 		<plugins>
-
 			<!-- Java Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -210,6 +218,24 @@ under the License.
 						<goals>
 							<goal>single</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>${wagon-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>upload</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload-single</goal>
+						</goals>
+						<configuration>
+							<url>scp://atguigu:000000@hadoop102:/opt/module/flink/test/</url>
+							<fromFile>target/${project.build.finalName}.${project.packaging}</fromFile>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
