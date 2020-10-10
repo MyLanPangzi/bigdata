@@ -97,3 +97,60 @@ Flink：
 ## 架构
 
 ![Flink Architecture](https://ci.apache.org/projects/flink/flink-docs-release-1.11/fig/processes.svg)
+
+### JobManager
+
+至少有一个JobManager，可以HA，一个leader，其余standby。
+
+职责：
+* 任务调度
+* 响应任务的完成或失败
+* 协调checkpoint
+* 协调失败恢复
+
+
+#### ResourceManager
+
+职责：
+* 负责分配以及供应资源，管理任务槽（集群调度单元），不同环境有不同实现
+* 只分配可用槽，不启动槽
+
+#### Dispatcher
+
+职责：
+* 提供REST API提交job，并启动JobMaster
+* 运行WebUI
+
+#### JobMaster
+
+* 管理单个JobGraph的执行，每个Job都有自己的JobMaster
+
+### TaskManagers
+
+至少一个TaskManager
+
+职责：
+* 执行dataflow的task
+* 缓冲并交换数据数据流
+* 管理节点上的slot，分配节点上的Managed Memory
+* 负责与JobManager通信，报告任务的状态
+
+### 任务槽
+
+* 每个TaskManager就是一个JVM进程，并管理节点上的托管内存，对内存进行隔离，这些隔离后的内存就是任务槽  
+* 每个槽对应一个线程，描述了TaskManager的固定资源子集
+* 同JVM的任务能共享TCP连接，心跳，数据结构，数据，从而减少任务开销，提供吞吐
+* 同Job下的substasks能共享槽，能充分利用资源
+* 任务最大的并行度取决于集群的槽数，无需计算每个任务的并行度
+
+dataflow逻辑图
+
+![](https://ci.apache.org/projects/flink/flink-docs-release-1.11/fig/tasks_chains.svg)
+
+槽未共享视图：
+
+![](https://ci.apache.org/projects/flink/flink-docs-release-1.11/fig/tasks_slots.svg)
+
+槽共享后视图：
+
+![](https://ci.apache.org/projects/flink/flink-docs-release-1.11/fig/slot_sharing.svg)
