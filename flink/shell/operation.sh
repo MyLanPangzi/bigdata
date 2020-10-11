@@ -7,4 +7,5 @@
 kafka-topics.sh --create --topic flink_source_word_count --bootstrap-server hadoop102:9092
 kafka-topics.sh --describe --topic flink_source_word_count --bootstrap-server hadoop102:9092
 kafka-console-producer.sh --topic flink_source_word_count --broker-list hadoop102:9092
+kafka-console-consumer.sh --topic flink_kafka_sink --from-beginning --bootstrap-server hadoop102:9092
 kafka-console-consumer.sh --topic flink_source_word_count --from-beginning --bootstrap-server hadoop102:9092

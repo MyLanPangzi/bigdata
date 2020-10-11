@@ -42,6 +42,8 @@ under the License.
 		<scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
 		<wagon-ssh.version>3.0.0</wagon-ssh.version>
 		<wagon-maven-plugin.version>2.0.0</wagon-maven-plugin.version>
+		<flink-connector-redis_2.11.version>1.1-SNAPSHOT</flink-connector-redis_2.11.version>
+		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
 	</properties>
 
 	<repositories>
@@ -89,6 +91,26 @@ under the License.
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-elasticsearch7_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.bahir</groupId>
+			<artifactId>flink-connector-redis_2.11</artifactId>
+			<version>${flink-connector-redis_2.11.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-jdbc_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
 		</dependency>
 
 		<!-- Add connector dependencies here. They must be in the default scope (compile). -->
