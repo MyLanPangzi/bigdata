@@ -135,7 +135,7 @@ Flink：
 * 管理节点上的slot，分配节点上的Managed Memory
 * 负责与JobManager通信，报告任务的状态
 
-### 任务槽
+## 任务槽
 
 * 每个TaskManager就是一个JVM进程，并管理节点上的托管内存，对内存进行隔离，这些隔离后的内存就是任务槽  
 * 每个槽对应一个线程，描述了TaskManager的固定资源子集
@@ -154,3 +154,30 @@ dataflow逻辑图
 槽共享后视图：
 
 ![](https://ci.apache.org/projects/flink/flink-docs-release-1.11/fig/slot_sharing.svg)
+
+## 数据类型
+
+Flink支持的数据类型：
+
+* Java元组，scala样例类
+* POJO
+* 原始数据类型
+* 非POJO的常规类
+* 实现了flink Value接口的类
+* Hadoop Writables
+* 特殊类型，集合，Either，Option
+
+## UDF
+
+### 普通UDF
+
+跟lambda表达式无差异
+
+### 富函数
+
+特点：
+* 函数生命周期方法
+    * 数据库连接
+    * 加载外部缓存，外部资源
+* 可以访问函数执行环境
+* 可以使用状态
