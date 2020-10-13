@@ -15,12 +15,12 @@ package object scala {
 
     var running = true
 
-    val words = List("world", "flink", "scala", "hadoop", "spark", "hive", "flume", "kafka")
+    val words = List("Hello", "world", "flink", "scala", "hadoop", "spark", "hive", "flume", "kafka")
 
     override def run(ctx: SourceFunction.SourceContext[Line]): Unit = {
       val random = new Random()
       while (running) {
-        ctx.collect(Line("hello " + words(random.nextInt(words.size)), System.currentTimeMillis()))
+        ctx.collect(Line(words(random.nextInt(words.size)), System.currentTimeMillis()))
         TimeUnit.SECONDS.sleep(latency)
       }
 
