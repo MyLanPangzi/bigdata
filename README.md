@@ -22,6 +22,10 @@
 
 - [Zookeeper集群搭建](docs/Zookeeper集群搭建.md)
 
+## Kafka
+
+- [Kafka集群搭建](docs/Kafka集群搭建.md)
+
 ## MySQL
 
 ## Sqoop
