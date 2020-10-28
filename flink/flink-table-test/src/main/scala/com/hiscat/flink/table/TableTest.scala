@@ -19,7 +19,7 @@ object TableTest {
       Event("hello", "click", 1000),
       Event("hello", "click", 3000),
       Event("world", "click", 5000),
-      Event("world", "click", 9000),
+      Event("world", "click", 9000)
     )
       .assignAscendingTimestamps(_.ts)
 
