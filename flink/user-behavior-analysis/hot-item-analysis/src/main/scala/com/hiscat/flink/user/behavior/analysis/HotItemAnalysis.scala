@@ -5,11 +5,14 @@ import java.sql.Timestamp
 import org.apache.flink.api.common.functions.AggregateFunction
 import org.apache.flink.api.common.state.{MapState, MapStateDescriptor}
 import org.apache.flink.streaming.api.TimeCharacteristic
+import org.apache.flink.streaming.api.datastream.DataStreamSink
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction
 import org.apache.flink.streaming.api.scala._
-import org.apache.flink.streaming.api.scala.function.ProcessWindowFunction
 import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
+import org.apache.flink.table.api._
+import org.apache.flink.table.api.bridge.scala._
+import org.apache.flink.types.Row
 import org.apache.flink.util.Collector
 
 import scala.math.Ordering
@@ -25,16 +28,73 @@ import scala.math.Ordering
 object HotItemAnalysis {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
+    val tableEnv = StreamTableEnvironment.create(env)
 
-    env.setParallelism(4)
+    env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
-    env.readTextFile("mock-data/UserBehavior.csv")
+    val input = env.readTextFile("mock-data/UserBehavior.csv")
       .map(e => {
         val split = e.split(",")
         UserBehavior(split(0).toLong, split(1).toLong, split(2).toLong, split(3), split(4).toLong)
       })
       .assignAscendingTimestamps(_.ts * 1000L)
+
+    //    dataStreamApi(input)
+    //    tableApi(input, tableEnv)
+    sql(tableEnv, input)
+
+    env.execute("hot item analysis")
+  }
+
+  def sql(tableEnv: StreamTableEnvironment, input: DataStream[UserBehavior]): DataStreamSink[(Boolean, Row)] = {
+    tableEnv.createTemporaryView("behavior", input, $"productId", $"behavior", $"ts".rowtime)
+    tableEnv.sqlQuery(
+      """
+        |SELECT *
+        |FROM (
+        |SELECT *, ROW_NUMBER() OVER(PARTITION BY productId ORDER BY cnt DESC) num
+        |FROM (
+        |SELECT HOP_END(ts, INTERVAL '5' MINUTE, INTERVAL '1' HOUR), productId, COUNT(*) cnt
+        |FROM behavior
+        |WHERE behavior = 'pv'
+        |GROUP BY productId, HOP(ts, INTERVAL '5' MINUTE, INTERVAL '1' HOUR)
+        |)t
+        |)t
+        |WHERE t.num <=3
+        |""".stripMargin)
+      .toRetractStream[Row]
+      .print("sql")
+  }
+
+  def tableApi(input: DataStream[UserBehavior], tableEnv: StreamTableEnvironment): Unit = {
+    //包对象下的样例类会导致编译错误，这是一个BUG
+    val table = tableEnv.fromDataStream(input, $"productId", $"behavior", $"ts".rowtime)
+    table.printSchema()
+    val aggTable = table
+      .where($"behavior" === "pv")
+      .window(Slide over 1.hour every 5.minutes on $"ts" as $"w")
+      .groupBy($"w", $"productId")
+      .select($"w".end as "wend", $"productId", $"productId".count as "cnt")
+      .toAppendStream[Row]
+    //    aggTable.print("table ")
+
+    tableEnv.createTemporaryView("behavior", aggTable)
+    tableEnv.sqlQuery(
+      """
+        | SELECT wend, productId, cnt, num
+        | FROM (
+        |   SELECT *, ROW_NUMBER() OVER(PARTITION BY wend ORDER BY cnt DESC) num
+        |   FROM behavior
+        | )t
+        | WHERE t.num <=3
+        |""".stripMargin)
+      .toRetractStream[Row]
+      .print()
+  }
+
+  def dataStreamApi(input: DataStream[UserBehavior]): DataStreamSink[String] = {
+    input
       .filter(e => e.behavior == "pv")
       .keyBy(_.productId)
       .timeWindow(Time.hours(1), Time.minutes(5))
@@ -48,8 +108,6 @@ object HotItemAnalysis {
       .keyBy(_.windowEnd)
       .process(new TopN(5))
       .print()
-
-    env.execute("hot item analysis")
   }
 
   class ItemCountAgg extends AggregateFunction[UserBehavior, ItemViewCount, ItemViewCount] {
