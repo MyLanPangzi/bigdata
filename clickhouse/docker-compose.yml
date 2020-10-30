@@ -1,0 +1,13 @@
+version: '3.7'
+#$ docker run -d --name some-clickhouse-server --ulimit nofile=262144:262144 yandex/clickhouse-server
+services:
+  server:
+    image: yandex/clickhouse-server
+    container_name: clickhouse-server
+    ports:
+    - '8123:8123'
+    - '9000:9000'
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144

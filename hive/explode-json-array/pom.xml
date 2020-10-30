@@ -42,20 +42,24 @@
                             <fromFile>target/${project.build.finalName}.${project.packaging}</fromFile>
                             <url>scp://atguigu:000000@hadoop102:/opt/module/hive/lib</url>
                             <commands>
-                                <command>hdfs dfs -rm -f /user/hive/jars/${project.build.finalName}.${project.packaging}</command>
-                                <command>hdfs dfs -put /opt/module/hive/lib/${project.build.finalName}.${project.packaging} /user/hive/jars</command>
+                                <command>hdfs dfs -rm -f
+                                    /user/hive/jars/${project.build.finalName}.${project.packaging}
+                                </command>
+                                <command>hdfs dfs -put
+                                    /opt/module/hive/lib/${project.build.finalName}.${project.packaging} /user/hive/jars
+                                </command>
                                 <command>hive -e "
                                     use gmall;
                                     drop function if exists explode_json_array;
                                     CREATE FUNCTION explode_json_array AS 'com.hiscat.hive.ExplodeJsonArrayUDTF'
-                                    USING JAR 'hdfs://hadoop102:8020/user/hive/jars/${project.build.finalName}.${project.packaging}';"
+                                    USING JAR
+                                    'hdfs://hadoop102:8020/user/hive/jars/${project.build.finalName}.${project.packaging}';"
                                 </command>
                             </commands>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>
