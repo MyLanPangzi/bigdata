@@ -37,10 +37,16 @@ under the License.
         <flink.version>1.11.2</flink.version>
         <scala.binary.version>2.12</scala.binary.version>
         <redisson.version>3.13.6</redisson.version>
+        <jedis.version>3.3.0</jedis.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
