@@ -26,6 +26,8 @@ under the License.
     <modules>
         <module>hot-item-analysis</module>
         <module>network-flow-analysis</module>
+        <module>market-analysis</module>
+        <module>login-failure-detect</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -42,6 +44,11 @@ under the License.
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-cep-scala_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
