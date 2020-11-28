@@ -52,6 +52,7 @@
             <groupId>org.scalactic</groupId>
             <artifactId>scalactic_2.12</artifactId>
             <version>${scalactic.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
@@ -61,21 +62,28 @@
         </dependency>
     </dependencies>
 
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <url></url>-->
+<!--            <id>plugin</id>-->
+<!--            -->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
     <build>
         <plugins>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
                 <version>${scala-maven-plugin.version}</version>
-                <configuration>
-                    <compilerPlugins>
-                        <compilerPlugin>
-                            <groupId>com.artima.supersafe</groupId>
-                            <artifactId>supersafe_2.12.12</artifactId>
-                            <version>1.1.10</version>
-                        </compilerPlugin>
-                    </compilerPlugins>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <compilerPlugins>-->
+<!--                        <compilerPlugin>-->
+<!--                            <groupId>com.artima.supersafe</groupId>-->
+<!--                            <artifactId>supersafe_2.12.12</artifactId>-->
+<!--                            <version>1.1.10</version>-->
+<!--                        </compilerPlugin>-->
+<!--                    </compilerPlugins>-->
+<!--                </configuration>-->
                 <executions>
                     <execution>
                         <goals>
@@ -83,8 +91,15 @@
                             <goal>testCompile</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>doc-jar</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
+<!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -105,8 +120,8 @@
                             </artifactSet>
                             <filters>
                                 <filter>
-                                    <!-- Do not copy the signatures in the META-INF folder.
-                                    Otherwise, this might cause SecurityExceptions when using the JAR. -->
+                                    &lt;!&ndash; Do not copy the signatures in the META-INF folder.
+                                    Otherwise, this might cause SecurityExceptions when using the JAR. &ndash;&gt;
                                     <artifact>*:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/*.SF</exclude>
@@ -119,6 +134,7 @@
                     </execution>
                 </executions>
             </plugin>
+-->
         </plugins>
     </build>
 </project>

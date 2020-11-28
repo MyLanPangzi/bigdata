@@ -5,7 +5,8 @@ import java.net.URI
 import org.apache.flink.core.fs.{FileSystem, Path}
 import org.apache.flink.util.IOUtils
 
-object SplParser {
+object SqlCommandParser {
+
   def getCommands(path: String): Seq[SqlCommand] = {
     val uri = URI.create(path)
     val fs = FileSystem.get(uri)
@@ -14,7 +15,7 @@ object SplParser {
     IOUtils.readFully(stream, bytes, 0, bytes.length)
     val text = new String(bytes)
     text.split(";")
-      .map(_.trim)
+      .map(_.trim.replace("；", ";"))
       .filter(_.nonEmpty)
       .filterNot(_.startsWith("--"))
       .map {

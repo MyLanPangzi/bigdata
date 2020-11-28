@@ -16,6 +16,8 @@
         <redisson.version>3.13.6</redisson.version>
         <fastjson.version>1.2.73</fastjson.version>
         <jedis.version>2.10.2</jedis.version>
+        <sql-parser.version>1.0-SNAPSHOT</sql-parser.version>
+        <scalactic.version>3.2.2</scalactic.version>
     </properties>
     <dependencies>
         <dependency>
@@ -64,6 +66,12 @@
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.hiscat.flink.sql.parser</groupId>
+            <artifactId>sql-parser</artifactId>
+            <version>${sql-parser.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -82,6 +90,20 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.scalactic</groupId>
+            <artifactId>scalactic_2.12</artifactId>
+            <version>${scalactic.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.12</artifactId>
+            <version>${scalactic.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

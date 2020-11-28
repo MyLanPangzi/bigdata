@@ -33,7 +33,7 @@ case class RedisDynamicTable(
     TableFunctionProvider.of(RedisTableFunction(redisOptions, deserializer, keys))
   }
 
-  override def copy(): DynamicTableSink = RedisDynamicTable(
+  override def copy(): RedisDynamicTable = RedisDynamicTable(
     redisOptions,
     encodingFormat,
     decodingFormat,
