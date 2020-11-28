@@ -53,7 +53,6 @@ CREATE TABLE order_detail
  'database-name' = 'gmall2020',
  'table-name' = 'order_detail'
 );
-
 CREATE TABLE user_info
 (
 	id bigint comment '编号',
@@ -69,7 +68,7 @@ CREATE TABLE user_info
 	gender varchar(1)  comment '性别 M男,F女',
 	create_time TIMESTAMP comment '创建时间',
 	operate_time TIMESTAMP comment '修改时间',
-	 primary key(id) not enforced 
+	 primary key(id) not enforced
 )
  WITH (
  'connector' = 'mysql-cdc',
@@ -79,4 +78,49 @@ CREATE TABLE user_info
  'password' = '000000',
  'database-name' = 'gmall2020',
  'table-name' = 'user_info'
+);
+CREATE TABLE base_province
+(
+	id bigint  comment 'id',
+	name varchar(20)  comment '省名称',
+	region_id varchar(20)  comment '大区id',
+	area_code varchar(20)  comment '行政区位码',
+	iso_code varchar(20)  comment '国际编码',
+    primary key(id) not enforced
+)
+WITH (
+ 'connector' = 'mysql-cdc',
+ 'hostname' = 'hadoop102',
+ 'port' = '3306',
+ 'username' = 'root',
+ 'password' = '000000',
+ 'database-name' = 'gmall2020',
+ 'table-name' = 'base_province'
+);
+
+CREATE TABLE first_order_index (
+    id BIGINT,
+    order_status STRING,
+    user_id BIGINT,
+    final_total_amount DECIMAL(16, 2),
+    benefit_reduce_amount DECIMAL(16, 2),
+    original_total_amount DECIMAL(16, 2),
+    feight_fee DECIMAL(16, 2),
+    expire_time TIMESTAMP,
+    create_time TIMESTAMP,
+    operate_time TIMESTAMP,
+    create_date STRING,
+    create_hour STRING,
+    if_first_order BOOLEAN,
+    province_name STRING,
+    province_area_code STRING,
+    province_iso_code STRING,
+    user_age_group DATE,
+    user_gender STRING,
+    PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+  'connector' = 'elasticsearch-6',
+  'hosts' = 'http://hadoop102:9200；http://hadoop103:9200；http://hadoop104:9200',
+  'index' = 'first_order_{create_date}',
+  'document-type' = '_doc'
 );

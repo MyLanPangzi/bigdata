@@ -20,7 +20,9 @@
         <scalactic.version>3.2.2</scalactic.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <flink-connector-mysql-cdc.version>1.0.0</flink-connector-mysql-cdc.version>
+        <phoenix.version>5.0.0-HBase-2.0</phoenix.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -57,6 +59,17 @@
             <artifactId>flink-json</artifactId>
             <version>${flink.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc_${scala.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.ververica</groupId>
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+            <version>${flink-connector-mysql-cdc.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -77,12 +90,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.ververica</groupId>
-            <!-- add the dependency matching your database -->
-            <artifactId>flink-connector-mysql-cdc</artifactId>
-            <version>${flink-connector-mysql-cdc.version}</version>
         </dependency>
 
         <dependency>

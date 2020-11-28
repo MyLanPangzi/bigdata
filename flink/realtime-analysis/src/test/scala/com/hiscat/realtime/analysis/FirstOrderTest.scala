@@ -18,7 +18,7 @@ class FirstOrderTest extends AnyFunSuite with BeforeAndAfter with BeforeAndAfter
     SqlCommandParser.getCommands(getClass.getResource("/first_order.sql").getPath)
       .filterNot(_.isInstanceOf[DmlCommand])
       .foreach(e => {
-//        println(e)
+        //        println(e)
         e.call(tEnv)
       })
   }
@@ -45,6 +45,37 @@ class FirstOrderTest extends AnyFunSuite with BeforeAndAfter with BeforeAndAfter
     table
       .toRetractStream[Row]
       .print("test")
+  }
+
+  test("first order") {
+    val table = tEnv.sqlQuery(
+      """
+        |SELECT  o.id,
+        |        order_status,
+        |        user_id,
+        |        final_total_amount,
+        |        benefit_reduce_amount,
+        |        original_total_amount,
+        |        feight_fee,
+        |        expire_time,
+        |        o.create_time,
+        |        o.operate_time,
+        |        DATE_FORMAT(o.create_time, 'yyyyMMdd') create_date,
+        |        DATE_FORMAT(o.create_time, 'HH') create_hour,
+        |        true if_first_order,
+        |        p.name province_name,
+        |        p.area_code province_area_code,
+        |        p.iso_code province_iso_code,
+        |        u.birthday user_age_group,
+        |        u.gender user_gender
+        |FROM order_info o
+        |LEFT JOIN user_info u on o.user_id = u.id
+        |LEFT JOIN base_province p on o.province_id = p.id
+        |""".stripMargin)
+    table.printSchema()
+    table.toRetractStream[Row]
+      .print()
+    table.executeInsert("first_order_index")
   }
 
 
