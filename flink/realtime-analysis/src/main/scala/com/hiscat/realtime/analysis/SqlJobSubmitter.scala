@@ -4,9 +4,8 @@ import com.hiscat.flink.sql.parser.{DmlCommand, SqlCommandParser}
 import org.apache.flink.api.common.time.Time
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api.bridge.scala._
-import org.apache.flink.types.Row
 
-object DauJob {
+object SqlJobSubmitter {
 
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment

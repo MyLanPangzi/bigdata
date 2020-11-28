@@ -18,6 +18,8 @@
         <jedis.version>2.10.2</jedis.version>
         <sql-parser.version>1.0-SNAPSHOT</sql-parser.version>
         <scalactic.version>3.2.2</scalactic.version>
+        <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
+        <flink-connector-mysql-cdc.version>1.0.0</flink-connector-mysql-cdc.version>
     </properties>
     <dependencies>
         <dependency>
@@ -71,7 +73,17 @@
             <artifactId>sql-parser</artifactId>
             <version>${sql-parser.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.ververica</groupId>
+            <!-- add the dependency matching your database -->
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+            <version>${flink-connector-mysql-cdc.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

@@ -9,7 +9,7 @@ import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import org.scalatest.funsuite.AnyFunSuite
 import com.hiscat.flink.sql.parser._
 
-class DauJobTest extends AnyFunSuite with BeforeAndAfter with BeforeAndAfterEach {
+class SqlJobSubmitterTest extends AnyFunSuite with BeforeAndAfter with BeforeAndAfterEach {
 
   var env: StreamExecutionEnvironment = _
   var tEnv: StreamTableEnvironment = _
@@ -57,12 +57,5 @@ class DauJobTest extends AnyFunSuite with BeforeAndAfter with BeforeAndAfterEach
       .print()
     env.fromElements(1).setParallelism(1).print()
     env.execute("test")
-  }
-
-
-  override protected def afterEach(): Unit = {
-//    tEnv.execute("sql")
-//    env.execute("test")
-
   }
 }
