@@ -124,3 +124,28 @@ CREATE TABLE first_order_index (
   'index' = 'first_order_{create_date}',
   'document-type' = '_doc'
 );
+CREATE VIEW first_order_view
+AS
+SELECT  o.id,
+        order_status,
+        user_id,
+        CAST(final_total_amount AS DOUBLE)   final_total_amount,
+        CAST(benefit_reduce_amount AS DOUBLE)  benefit_reduce_amount,
+        CAST(original_total_amount AS DOUBLE) original_total_amount,
+        CAST(feight_fee AS DOUBLE) feight_fee,
+        expire_time,
+        o.create_time,
+        o.operate_time,
+        DATE_FORMAT(o.create_time, 'yyyyMMdd') create_date,
+        DATE_FORMAT(o.create_time, 'HH') create_hour,
+        true if_first_order,
+        p.name province_name,
+        p.area_code province_area_code,
+        p.iso_code province_iso_code,
+        u.birthday user_age_group,
+        u.gender user_gender
+FROM order_info o
+LEFT JOIN user_info u on o.user_id = u.id
+LEFT JOIN base_province p on o.province_id = p.id
+;
+
