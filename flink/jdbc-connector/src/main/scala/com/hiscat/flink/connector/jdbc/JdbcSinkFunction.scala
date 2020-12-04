@@ -11,7 +11,7 @@ import org.apache.flink.util.ChildFirstClassLoader
 
 import scala.util.{Failure, Success, Try}
 
-case class JdbcSInkFunction(
+case class JdbcSinkFunction(
                              options: JdbcConnectionOptions,
                              fieldNames: Array[String],
                              rowDataType: DataType
@@ -27,14 +27,17 @@ case class JdbcSInkFunction(
 
   override def open(parameters: Configuration): Unit = {
     Try {
-//      val driver = Thread.currentThread().getContextClassLoader.loadClass(options.driver)
+      println(getClass.getClassLoader)
+      println(Thread.currentThread().getContextClassLoader)
+      Class.forName("com.mysql.jdbc.Driver")
+      //      val driver = Thread.currentThread().getContextClassLoader.loadClass(options.driver)
 //      println(driver)
 //      connection = if (options.username.isDefined) {
 //        DriverManager.getConnection(options.url, options.username.get, options.password.orNull)
 //      } else {
-      val driver = this.getClass.getClassLoader.loadClass(options.driver)
-      println(driver)
-      driver.newInstance()
+//      val driver = this.getClass.getClassLoader.loadClass(options.driver)
+//      println(driver)
+//      driver.newInstance()
 //      import scala.reflect.runtime.ReflectionUtils.
       DriverManager.getConnection(options.url)
       //      }

@@ -1,11 +1,19 @@
 kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092 \
 --replication-factor 3 \
 --partitions 3
+kafka-topics.sh --create --topic student --bootstrap-server localhost:9092
+kafka-topics.sh --create --topic result --bootstrap-server localhost:9092
+kafka-topics.sh --create --topic course --bootstrap-server localhost:9092
+
 kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+kafka-console-producer.sh --topic student --bootstrap-server localhost:9092
+kafka-console-producer.sh --topic course --bootstrap-server localhost:9092
 kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
 kafka-console-producer.sh --topic left --broker-list localhost:9092
 kafka-console-producer.sh --topic right --broker-list localhost:9092
 kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+kafka-console-consumer.sh --topic student --from-beginning --bootstrap-server localhost:9092
+kafka-console-consumer.sh --topic course --from-beginning --bootstrap-server localhost:9092
 
 
 

@@ -25,7 +25,7 @@ case class JdbcExtendedDynamicTable(
 
   override def getSinkRuntimeProvider(context: DynamicTableSink.Context): DynamicTableSink.SinkRuntimeProvider = {
     println("table")
-    SinkFunctionProvider.of(JdbcSInkFunction(options, fieldNames, rowDataType))
+    SinkFunctionProvider.of(JdbcSinkFunction(options, fieldNames, rowDataType))
     //    SinkFunctionProvider.of(
     //      JdbcSink.sink(
     //        if (options.enableUpsert)

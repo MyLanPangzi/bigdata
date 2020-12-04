@@ -6,7 +6,7 @@ import org.apache.flink.connector.jdbc.JdbcConnectionOptions.JdbcConnectionOptio
 import org.apache.flink.connector.jdbc.{JdbcSink, JdbcStatementBuilder}
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api.bridge.scala._
-import org.apache.phoenix.jdbc.PhoenixDriver
+//import org.apache.phoenix.jdbc.PhoenixDriver
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import org.scalatest.funsuite.AnyFunSuite
 
@@ -28,7 +28,7 @@ class PhoenixTest extends AnyFunSuite with BeforeAndAfter with BeforeAndAfterEac
           },
           new JdbcConnectionOptionsBuilder()
             .withUrl("jdbc:phoenix:hadoop102:2181/default")
-            .withDriverName(classOf[PhoenixDriver].getName)
+//            .withDriverName(classOf[PhoenixDriver].getName)
             .build()
         )
       )
