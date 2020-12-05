@@ -2,14 +2,14 @@ package com.hiscat.flink.connector.jdbc
 
 import java.sql.DriverManager
 
-import org.apache.phoenix.jdbc.PhoenixDriver
+//import org.apache.phoenix.jdbc.PhoenixDriver
 import org.scalatest.BeforeAndAfter
 import org.scalatest.funsuite.AnyFunSuite
 
 class PhoenixJdbcTest extends AnyFunSuite with BeforeAndAfter {
 
   test("phoenix write") {
-    Class.forName(classOf[PhoenixDriver].getName)
+//    Class.forName(classOf[PhoenixDriver].getName)
     val connection = DriverManager.getConnection("jdbc:phoenix:hadoop102:2181")
     connection.setAutoCommit(true)
     //    val statement = connection.createStatement()
