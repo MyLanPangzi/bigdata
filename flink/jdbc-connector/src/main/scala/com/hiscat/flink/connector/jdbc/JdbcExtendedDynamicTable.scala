@@ -25,48 +25,8 @@ case class JdbcExtendedDynamicTable(
 
   override def getSinkRuntimeProvider(context: DynamicTableSink.Context): DynamicTableSink.SinkRuntimeProvider = {
     println("table")
-    SinkFunctionProvider.of(JdbcSInkFunction(options, fieldNames, rowDataType))
-    //    SinkFunctionProvider.of(
-    //      JdbcSink.sink(
-    //        if (options.enableUpsert)
-    //          s"UPSERT INTO ${options.tableName} VALUES $parameters"
-    //        else
-    //          s"INSERT INTO ${options.tableName} VALUES $parameters"
-    //        ,
-    //        getJdbcStatementBuilder,
-    //        new JdbcConnectionOptionsBuilder()
-    //          .withUrl(options.url)
-    //          .withDriverName(options.driver)
-    //          .withUsername(options.username.orNull)
-    //          .withPassword(options.password.orNull)
-    //          .build()
-    //      )
-    //    )
+    SinkFunctionProvider.of(new JavaJdbcSInkFunction)
   }
-
-  /*
-    private def getJdbcStatementBuilder: JdbcStatementBuilder[RowData] = {
-      new JdbcStatementBuilder[RowData] {
-        override def accept(p: PreparedStatement, r: RowData): Unit = {
-          println(r)
-          p.getConnection.setAutoCommit(true)
-          import scala.collection.JavaConverters._
-          rowDataType.getChildren.asScala.zipWithIndex
-            .map(e => RowData.createFieldGetter(e._1.getLogicalType, e._2))
-            .map(g => g.getFieldOrNull(r))
-            .map {
-              case e: StringData => new String(e.toBytes)
-              case e: DecimalData => e.toBigDecimal
-              case e: TimestampData => new Timestamp(e.getMillisecond)
-              case e => e
-            }.zipWithIndex
-            .foreach {
-              case (value, i) => p.setObject(i + 1, value)
-            }
-        }
-      }
-    }
-  */
 
   override def copy(): DynamicTableSink = JdbcExtendedDynamicTable(options, fieldNames, rowDataType)
 

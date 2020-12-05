@@ -24,4 +24,6 @@ class PhoenixJdbcTest extends AnyFunSuite with BeforeAndAfter {
 
     connection.close()
   }
+
+
 }

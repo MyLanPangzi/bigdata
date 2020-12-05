@@ -8,6 +8,7 @@ import org.apache.flink.streaming.api.functions.sink.{RichSinkFunction, SinkFunc
 import org.apache.flink.table.data.RowData
 import org.apache.flink.table.types.DataType
 import org.apache.flink.util.ChildFirstClassLoader
+import org.apache.phoenix.jdbc.PhoenixDriver
 
 import scala.util.{Failure, Success, Try}
 
@@ -18,7 +19,8 @@ case class JdbcSInkFunction(
                            ) extends RichSinkFunction[RowData] {
 
   println("sink")
-  var connection: Connection = _
+  lazy val connection: Connection = new PhoenixDriver().connect("jdbc:phoenix:hadoop102", new Properties())
+
 
   //  lazy private val parameters = fieldNames.map(_ => "?").mkString("(", ",", ")")
   //  lazy private val upsertStatement: PreparedStatement = connection.prepareStatement(s"UPSERT INTO ${options.tableName} VALUES $parameters")
@@ -27,30 +29,24 @@ case class JdbcSInkFunction(
 
   override def open(parameters: Configuration): Unit = {
     Try {
-//      val driver = Thread.currentThread().getContextClassLoader.loadClass(options.driver)
-//      println(driver)
-//      connection = if (options.username.isDefined) {
-//        DriverManager.getConnection(options.url, options.username.get, options.password.orNull)
-//      } else {
-      val driver = this.getClass.getClassLoader.loadClass(options.driver)
-      println(driver)
-      driver.newInstance()
-//      import scala.reflect.runtime.ReflectionUtils.
-      DriverManager.getConnection(options.url)
-      //      }
-//      connection.setAutoCommit(true)
-      println(connection)
+      //      Class.forName(options.driver)
+      //      val driver = new PhoenixDriver()
+      //      val connection = driver.connect("jdbc:phoenix:hadoop102", new Properties())
+      //      println(JdbcConnectionProvider().getConnection)
+      //      Thread.sleep(10000)
     } match {
       case Failure(exception) =>
-        println("exception")
-        exception.printStackTrace()
+        println(exception)
+      //        exception.printStackTrace()
       case Success(value) => println(value)
     }
     println("open")
   }
 
+
   override def invoke(value: RowData, context: SinkFunction.Context[_]): Unit = {
     println("invoke ")
+    println(connection)
     //    import scala.collection.JavaConverters._
     //    rowDataType.getChildren.asScala.zipWithIndex
     //      .map(e => RowData.createFieldGetter(e._1.getLogicalType, e._2))
