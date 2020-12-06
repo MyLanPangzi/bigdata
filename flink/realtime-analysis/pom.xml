@@ -20,7 +20,6 @@
         <scalactic.version>3.2.2</scalactic.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <flink-connector-mysql-cdc.version>1.0.0</flink-connector-mysql-cdc.version>
-        <phoenix.version>5.0.0-HBase-2.0</phoenix.version>
     </properties>
 
     <dependencies>
