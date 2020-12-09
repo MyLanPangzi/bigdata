@@ -6,10 +6,11 @@ import com.hiscat.flink.connector.phoenix.PhoenixDynamicTableFactory.{TABLE_NAME
 import org.apache.flink.configuration.{ConfigOption, ConfigOptions}
 import org.apache.flink.shaded.guava18.com.google.common.collect.Sets
 import org.apache.flink.table.connector.sink.DynamicTableSink
-import org.apache.flink.table.factories.{DynamicTableFactory, DynamicTableSinkFactory, FactoryUtil}
+import org.apache.flink.table.connector.source.DynamicTableSource
+import org.apache.flink.table.factories.{DynamicTableFactory, DynamicTableSinkFactory, DynamicTableSourceFactory, FactoryUtil}
 import org.apache.flink.table.types.DataType
 
-case class PhoenixDynamicTableFactory() extends DynamicTableSinkFactory {
+case class PhoenixDynamicTableFactory() extends DynamicTableSinkFactory with DynamicTableSourceFactory {
 
   println("factory")
 
@@ -18,14 +19,17 @@ case class PhoenixDynamicTableFactory() extends DynamicTableSinkFactory {
 
     helper.validate()
 
+    val fieldDataTypes: Array[DataType] = context.getCatalogTable.getSchema.getFieldDataTypes
+
+    PhoenixDynamicTableSink(getPhoenixOptions(helper), fieldDataTypes)
+  }
+
+  private def getPhoenixOptions(helper: FactoryUtil.TableFactoryHelper) = {
     val options = helper.getOptions
     val url = options.get(URL)
     val tableName = options.get(TABLE_NAME)
     val phoenixOptions = PhoenixOptions(url, tableName)
-
-    val fieldDataTypes: Array[DataType] = context.getCatalogTable.getSchema.getFieldDataTypes
-
-    PhoenixDynamicTable(phoenixOptions, fieldDataTypes)
+    phoenixOptions
   }
 
   override def factoryIdentifier(): String = "phoenix"
@@ -33,6 +37,18 @@ case class PhoenixDynamicTableFactory() extends DynamicTableSinkFactory {
   override def requiredOptions(): util.Set[ConfigOption[_]] = Sets.newHashSet(URL, TABLE_NAME)
 
   override def optionalOptions(): util.Set[ConfigOption[_]] = Sets.newHashSet()
+
+  override def createDynamicTableSource(context: DynamicTableFactory.Context): DynamicTableSource = {
+    val helper = FactoryUtil.createTableFactoryHelper(this, context)
+
+    helper.validate()
+
+    val pks = context.getCatalogTable.getSchema.getPrimaryKey.get().getColumns
+
+    println("source ")
+    import scala.collection.JavaConverters._
+    PhoenixDynamicLookupTableSource(getPhoenixOptions(helper), pks.asScala.toArray)
+  }
 }
 
 object PhoenixDynamicTableFactory {

@@ -3,6 +3,7 @@ package com.hiscat.flink.connector.phoenix
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api.bridge.scala._
 import org.apache.flink.table.api._
+import org.apache.flink.types.Row
 
 object MainTest {
   def main(args: Array[String]): Unit = {
@@ -10,6 +11,13 @@ object MainTest {
     env.setParallelism(1)
     val tEnv = StreamTableEnvironment.create(env)
 
+    registerTestTable(tEnv)
+    testUpsert(env, tEnv)
+    testLookup(tEnv)
+    env.execute("test")
+  }
+
+  private def registerTestTable(tEnv: StreamTableEnvironment) = {
     tEnv.executeSql(
       """
         |CREATE TABLE test(
@@ -22,18 +30,29 @@ object MainTest {
         | 'table-name' = 'test'
         |)
         |""".stripMargin)
+  }
+
+  private def testUpsert(env: StreamExecutionEnvironment, tEnv: StreamTableEnvironment) = {
     val input = env.fromElements(
-      (1, "hello"),
-      (1, "world")
+      (1, "hello")
     )
-    tEnv.createTemporaryView("t", input, $"id", $"name")
+    tEnv.createTemporaryView("t", input, $"id", $"name", $"proctime".proctime)
     tEnv.executeSql(
       """
         |INSERT INTO test
-        |SELECT *
+        |SELECT id,name
         |FROM t
         |""".stripMargin)
-    env.fromElements(1).print()
-    env.execute("test")
+  }
+
+  private def testLookup(tEnv: StreamTableEnvironment) = {
+    tEnv.sqlQuery(
+      """
+        |SELECT t.id,test.name
+        |FROM t
+        |LEFT JOIN test FOR SYSTEM_TIME AS OF t.proctime AS test ON test.id = t.id
+        |""".stripMargin)
+      .toRetractStream[Row]
+      .print()
   }
 }

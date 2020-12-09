@@ -5,7 +5,7 @@ import org.apache.flink.table.connector.sink.{DynamicTableSink, SinkFunctionProv
 import org.apache.flink.table.types.DataType
 import org.apache.flink.types.RowKind
 
-case class PhoenixDynamicTable(
+case class PhoenixDynamicTableSink(
                                 options: PhoenixOptions,
                                 fieldDataTypes: Array[DataType]
                               ) extends DynamicTableSink {
@@ -22,10 +22,10 @@ case class PhoenixDynamicTable(
   }
 
   override def getSinkRuntimeProvider(context: DynamicTableSink.Context): DynamicTableSink.SinkRuntimeProvider =
-
     SinkFunctionProvider.of(PhoenixSinkFunction(options,fieldDataTypes))
 
-  override def copy(): DynamicTableSink = PhoenixDynamicTable(options, fieldDataTypes)
+  override def copy(): DynamicTableSink = PhoenixDynamicTableSink(options, fieldDataTypes)
 
   override def asSummaryString(): String = "phoenix dynamic table"
+
 }
