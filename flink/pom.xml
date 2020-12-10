@@ -11,10 +11,12 @@
     <modules>
         <module>flink-connectors</module>
         <module>sql-parser</module>
+        <module>realtime-analysis</module>
+        <module>flink-test</module>
     </modules>
     <properties>
         <flink.version>1.12.0</flink.version>
-        <scala.version>2.11</scala.version>
+        <scala.version>2.12</scala.version>
         <log4j.version>2.12.1</log4j.version>
         <maven-shade-plugin.version>3.1.1</maven-shade-plugin.version>
         <scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>

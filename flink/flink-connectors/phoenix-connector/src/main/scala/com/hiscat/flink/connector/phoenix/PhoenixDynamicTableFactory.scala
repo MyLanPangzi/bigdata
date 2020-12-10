@@ -12,8 +12,6 @@ import org.apache.flink.table.types.DataType
 
 case class PhoenixDynamicTableFactory() extends DynamicTableSinkFactory with DynamicTableSourceFactory {
 
-  println("factory")
-
   override def createDynamicTableSink(context: DynamicTableFactory.Context): DynamicTableSink = {
     val helper = FactoryUtil.createTableFactoryHelper(this, context)
 

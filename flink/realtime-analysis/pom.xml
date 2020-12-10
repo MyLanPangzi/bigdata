@@ -3,39 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.hiscat.realtime.analysis</groupId>
+    <parent>
+        <groupId>com.hiscat.flink</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <artifactId>realtime-analysis</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <flink.version>1.11.2</flink.version>
-        <scala.version>2.12</scala.version>
-        <log4j.version>2.12.1</log4j.version>
-        <flink-connector-redis_2.11.version>1.0</flink-connector-redis_2.11.version>
-        <redisson.version>3.13.6</redisson.version>
         <fastjson.version>1.2.73</fastjson.version>
-        <jedis.version>2.10.2</jedis.version>
         <sql-parser.version>1.0-SNAPSHOT</sql-parser.version>
-        <scalactic.version>3.2.2</scalactic.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
-        <flink-connector-mysql-cdc.version>1.0.0</flink-connector-mysql-cdc.version>
+        <flink-connector-mysql-cdc.version>1.1.0</flink-connector-mysql-cdc.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-planner-blink_${scala.version}</artifactId>
-            <version>${flink.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-clients_${scala.version}</artifactId>
-            <version>${flink.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
 
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -53,11 +37,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-json</artifactId>
-            <version>${flink.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-jdbc_${scala.version}</artifactId>
@@ -71,16 +51,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.hiscat.flink.sql.parser</groupId>
             <artifactId>sql-parser</artifactId>
             <version>${sql-parser.version}</version>
@@ -90,38 +60,10 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.scalactic</groupId>
-            <artifactId>scalactic_2.12</artifactId>
-            <version>${scalactic.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.12</artifactId>
-            <version>${scalactic.version}</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.hiscat.flink</groupId>-->
+<!--            <artifactId>phoenix-connector</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

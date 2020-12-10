@@ -11,6 +11,7 @@ import org.apache.flink.configuration.Configuration
 import org.apache.flink.metrics.MetricGroup
 import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
 import org.apache.flink.table.data.RowData
+import org.apache.flink.util.UserCodeClassLoader
 
 case class SocketSourceFunction(hostname: String,
                                 port: Integer,
@@ -54,6 +55,8 @@ case class SocketSourceFunction(hostname: String,
     deserializer.open(
       new DeserializationSchema.InitializationContext {
         override def getMetricGroup: MetricGroup = getRuntimeContext.getMetricGroup
+
+        override def getUserCodeClassLoader: UserCodeClassLoader = null
       }
     )
   }
