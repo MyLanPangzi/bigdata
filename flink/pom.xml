@@ -4,19 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.hiscat.flink.connector</groupId>
-    <artifactId>phoenix-connector</artifactId>
+    <groupId>com.hiscat.flink</groupId>
+    <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>flink-connectors</module>
+        <module>sql-parser</module>
+    </modules>
     <properties>
-        <flink.version>1.11.2</flink.version>
+        <flink.version>1.12.0</flink.version>
         <scala.version>2.11</scala.version>
         <log4j.version>2.12.1</log4j.version>
         <maven-shade-plugin.version>3.1.1</maven-shade-plugin.version>
         <scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
         <scalactic.version>3.2.2</scalactic.version>
+        <fastjson.version>1.2.73</fastjson.version>
     </properties>
     <dependencies>
-
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-planner-blink_${scala.version}</artifactId>
@@ -29,7 +34,24 @@
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-cep_${scala.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>${flink.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -52,22 +74,15 @@
 
         <dependency>
             <groupId>org.scalactic</groupId>
-            <artifactId>scalactic_2.11</artifactId>
+            <artifactId>scalactic_2.12</artifactId>
             <version>${scalactic.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
+            <artifactId>scalatest_2.12</artifactId>
             <version>${scalactic.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.phoenix</groupId>
-            <artifactId>phoenix-client</artifactId>
-            <version>5.0.0-HBase-2.0</version>
-            <scope>system</scope>
-            <systemPath>E:/github/bigdata/flink/realtime-analysis/phoenix-5.0.0-HBase-2.0-client.jar</systemPath>
         </dependency>
     </dependencies>
 

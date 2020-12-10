@@ -15,7 +15,6 @@ case class PhoenixLookupTableFunction(
                                        pks: Array[String]
                                      ) extends TableFunction[RowData] {
 
-  // url
   lazy private val connection: Connection = new PhoenixDriver().connect(phoenixOptions.url, new Properties())
   lazy private val condition: String = pks.map(e => s"$e = ?").mkString(" AND ")
   lazy private val st: PreparedStatement = connection.prepareStatement(s"SELECT * FROM ${phoenixOptions.tableName} WHERE 1=1 AND $condition ")

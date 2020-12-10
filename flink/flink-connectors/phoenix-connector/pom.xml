@@ -5,11 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hiscat.flink</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>flink-connectors</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>sql-parser</artifactId>
+    <artifactId>phoenix-connector</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.phoenix</groupId>
+            <artifactId>phoenix-client</artifactId>
+            <version>5.0.0-HBase-2.0</version>
+            <scope>system</scope>
+            <systemPath>E:/github/bigdata/lib/phoenix-5.0.0-HBase-2.0-client.jar</systemPath>
+        </dependency>
+    </dependencies>
 
 </project>

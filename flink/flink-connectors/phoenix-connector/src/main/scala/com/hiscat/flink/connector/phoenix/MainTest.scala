@@ -11,8 +11,9 @@ object MainTest {
     env.setParallelism(1)
     val tEnv = StreamTableEnvironment.create(env)
 
+    registerTableT(env, tEnv)
     registerTestTable(tEnv)
-    testUpsert(env, tEnv)
+//    testUpsert(env, tEnv)
     testLookup(tEnv)
     env.execute("test")
   }
@@ -32,11 +33,14 @@ object MainTest {
         |""".stripMargin)
   }
 
-  private def testUpsert(env: StreamExecutionEnvironment, tEnv: StreamTableEnvironment) = {
+  private def registerTableT(env: StreamExecutionEnvironment, tEnv: StreamTableEnvironment): Unit = {
     val input = env.fromElements(
       (1, "hello")
     )
     tEnv.createTemporaryView("t", input, $"id", $"name", $"proctime".proctime)
+  }
+
+  private def testUpsert(env: StreamExecutionEnvironment, tEnv: StreamTableEnvironment) = {
     tEnv.executeSql(
       """
         |INSERT INTO test

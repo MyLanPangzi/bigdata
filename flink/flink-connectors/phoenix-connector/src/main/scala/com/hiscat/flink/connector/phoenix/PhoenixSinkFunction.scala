@@ -22,7 +22,7 @@ case class PhoenixSinkFunction(
     connection.setAutoCommit(true)
   }
 
-  override def invoke(value: RowData, context: SinkFunction.Context[_]): Unit = {
+  override def invoke(value: RowData, context: SinkFunction.Context): Unit = {
     println("invoke : " + value)
     value.getRowKind match {
       case RowKind.INSERT | RowKind.UPDATE_BEFORE | RowKind.UPDATE_AFTER => upsert(value)

@@ -6,6 +6,7 @@ import org.apache.flink.metrics.MetricGroup
 import org.apache.flink.streaming.api.functions.sink.{RichSinkFunction, SinkFunction}
 import org.apache.flink.table.data.{RowData, StringData}
 import org.apache.flink.table.types.DataType
+import org.apache.flink.util.UserCodeClassLoader
 import redis.clients.jedis.Jedis
 
 import scala.collection.mutable
@@ -18,7 +19,7 @@ case class RedisSinkFunction(
                             ) extends RichSinkFunction[RowData] {
   //  lazy val config = new Config
   //  lazy val redisson: RedissonClient = Redisson.create(config)
- lazy private val jedis = new Jedis(options.hostname, options.port)
+  lazy private val jedis = new Jedis(options.hostname, options.port)
 
   override def open(parameters: Configuration): Unit = {
     super.open(parameters)
@@ -26,11 +27,14 @@ case class RedisSinkFunction(
     serializer.open(
       new SerializationSchema.InitializationContext {
         override def getMetricGroup: MetricGroup = getRuntimeContext.getMetricGroup
+
+        override def getUserCodeClassLoader: UserCodeClassLoader =
+          getRuntimeContext.getUserCodeClassLoader.asInstanceOf[UserCodeClassLoader]
       }
     )
   }
 
-  override def invoke(value: RowData, context: SinkFunction.Context[_]): Unit = {
+  override def invoke(value: RowData, context: SinkFunction.Context): Unit = {
     val key = pks.zipWithIndex
       .map {
         case (e, i) =>

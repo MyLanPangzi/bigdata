@@ -5,6 +5,7 @@ import org.apache.flink.metrics.MetricGroup
 import org.apache.flink.table.data.{GenericRowData, RowData}
 import org.apache.flink.table.functions.{FunctionContext, TableFunction}
 import org.apache.flink.table.types.DataType
+import org.apache.flink.util.UserCodeClassLoader
 import redis.clients.jedis.Jedis
 
 import scala.annotation.varargs
@@ -18,8 +19,10 @@ case class RedisTableFunction(
 
   override def open(context: FunctionContext): Unit = {
     deserializer.open(
-      new DeserializationSchema.InitializationContext{
+      new DeserializationSchema.InitializationContext {
         override def getMetricGroup: MetricGroup = context.getMetricGroup
+
+        override def getUserCodeClassLoader: UserCodeClassLoader = null
       }
     )
   }
