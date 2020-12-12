@@ -1,0 +1,87 @@
+DELETE  hadoop102:9200/_template/first_order_template
+###
+GET  hadoop102:9200/customer/_doc/1
+
+###
+PUT  hadoop102:9200/customer/_doc/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "John Doe"
+}
+
+###
+PUT  hadoop102:9200/_template/first_order_template
+Content-Type: application/json
+
+{
+  "index_patterns": ["first_order*"],
+  "settings": {
+    "number_of_shards": 3
+  },
+  "aliases" : {
+    "{index}-query": {},
+    "gmall2020_order_info-query":{}
+  },
+   "mappings": {
+     "_doc":{
+       "properties":{
+         "id":{
+           "type":"long"
+         },
+         "province_id":{
+           "type":"long"
+         },
+         "order_status":{
+           "type":"keyword"
+         },
+         "user_id":{
+           "type":"long"
+         },
+         "final_total_amount":{
+           "type":"double"
+         },
+          "benefit_reduce_amount":{
+           "type":"double"
+         },
+          "original_total_amount":{
+           "type":"double"
+         },
+          "feight_fee":{
+           "type":"double"
+         },
+          "expire_time":{
+           "type":"keyword"
+         },
+          "create_time":{
+           "type":"keyword"
+         },
+         "create_date":{
+           "type":"date"
+         },
+         "create_hour":{
+           "type":"keyword"
+         },
+         "if_first_order":{
+           "type":"keyword"
+         },
+         "province_name":{
+           "type":"keyword"
+         },
+          "province_area_code":{
+           "type":"keyword"
+         },
+         "province_iso_code":{
+           "type":"keyword"
+         },
+         "user_age_group":{
+           "type":"keyword"
+         },
+         "user_gender":{
+           "type":"keyword"
+         }
+       }
+     }
+   }
+}

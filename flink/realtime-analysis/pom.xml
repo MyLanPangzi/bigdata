@@ -17,6 +17,7 @@
         <sql-parser.version>1.0-SNAPSHOT</sql-parser.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <flink-connector-mysql-cdc.version>1.1.0</flink-connector-mysql-cdc.version>
+        <hadoop-client.version>3.2.1</hadoop-client.version>
     </properties>
 
     <dependencies>
@@ -49,21 +50,35 @@
             <artifactId>flink-connector-mysql-cdc</artifactId>
             <version>${flink-connector-mysql-cdc.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.hiscat.flink.sql.parser</groupId>
-            <artifactId>sql-parser</artifactId>
-            <version>${sql-parser.version}</version>
-        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.hiscat.flink</groupId>-->
-<!--            <artifactId>phoenix-connector</artifactId>-->
-<!--            <version>1.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop-client.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
     </dependencies>
 </project>
