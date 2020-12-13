@@ -30,24 +30,9 @@ object SqlJobSubmitter {
 
   def test(tEnv: StreamTableEnvironment, env: StreamExecutionEnvironment): Unit = {
     val table = tEnv.sqlQuery(
-      """select p.id,
-        |       (name,
-        |        area_code,
-        |        iso_code,
-        |        region_id,
-        |        region_name)
-        |from base_province p
-        |         left join base_region r on p.region_id = r.id
-        |         """.stripMargin)
+      """""".stripMargin)
+    table.printSchema()
     table.toRetractStream[Row].print()
-    table.executeInsert("hbase_dim_base_province")
-    val t2 = tEnv.sqlQuery(
-      """
-        |select user_id, ROW(if_first_order) cf
-        |from first_order_view
-        |where if_first_order
-        |""".stripMargin)
-    t2.executeInsert("hbase_user_first_order_status")
     env.fromElements(1).print()
     env.execute("test")
   }
