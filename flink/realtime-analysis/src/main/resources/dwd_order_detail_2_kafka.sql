@@ -130,7 +130,7 @@ CREATE TABLE kafka_order_detail
     primary key (id) not enforced
 )WITH(
  'connector' = 'upsert-kafka',
-  'topic' = 'dwd_order_detail_json',
+  'topic' = 'dwd_order_detail',
   'properties.bootstrap.servers' = 'hadoop102:9092',
   'key.format' = 'json',
   'value.format' = 'json'
@@ -184,3 +184,4 @@ FROM order_detail d
          LEFT JOIN order_info o on d.order_id = o.id
          LEFT JOIN hbase_sku_info FOR SYSTEM_TIME AS OF d.proctime AS s
 ON s.rowkey = d.sku_id;
+

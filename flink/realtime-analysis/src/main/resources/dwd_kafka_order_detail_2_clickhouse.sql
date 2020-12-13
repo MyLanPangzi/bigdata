@@ -47,8 +47,8 @@ CREATE TABLE clickhouse_order_detail
 ) WITH (
     'connector' = 'clickhouse',
     'url' = 'clickhouse://hadoop102:8123',
-    'username' = 'test',
-    'password' = '00000',
+    'username' = 'default',
+--     'password' = '<password>',
     'database-name' = 'dwd',
     'table-name' = 'order_detail',
     'sink.batch-size' = '1000',
