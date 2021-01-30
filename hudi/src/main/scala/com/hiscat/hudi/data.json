@@ -1,0 +1,122 @@
+[
+  {
+    "ts": 1611584009791,
+    "uuid": "9aab890a-23f2-4e09-bb81-197c7fbe4ca6",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.4726905879569653,
+    "begin_lon": 0.46157858450465483,
+    "end_lat": 0.754803407008858,
+    "end_lon": 0.9671159942018241,
+    "fare": 34.158284716382845,
+    "partitionpath": "americas/brazil/sao_paulo"
+  },
+  {
+    "ts": 1611881444704,
+    "uuid": "1eeb6a35-56ef-4ad5-a19f-9e645d977316",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.6100070562136587,
+    "begin_lon": 0.8779402295427752,
+    "end_lat": 0.3407870505929602,
+    "end_lon": 0.5030798142293655,
+    "fare": 43.4923811219014,
+    "partitionpath": "americas/brazil/sao_paulo"
+  },
+  {
+    "ts": 1611363971783,
+    "uuid": "a808d06a-ddfe-44ab-847e-3753e7219e9b",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.5731835407930634,
+    "begin_lon": 0.4923479652912024,
+    "end_lat": 0.08988581780930216,
+    "end_lon": 0.42520899698713666,
+    "fare": 64.27696295884016,
+    "partitionpath": "americas/united_states/san_francisco"
+  },
+  {
+    "ts": 1611880027502,
+    "uuid": "fc121e1e-fc94-4426-a69e-09dc10a90eb0",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.21624150367601136,
+    "begin_lon": 0.14285051259466197,
+    "end_lat": 0.5890949624813784,
+    "end_lon": 0.0966823831927115,
+    "fare": 93.56018115236618,
+    "partitionpath": "americas/united_states/san_francisco"
+  },
+  {
+    "ts": 1611428160210,
+    "uuid": "153484d9-4ef5-4535-acfb-822c82a82a1a",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.40613510977307,
+    "begin_lon": 0.5644092139040959,
+    "end_lat": 0.798706304941517,
+    "end_lon": 0.02698359227182834,
+    "fare": 17.851135255091155,
+    "partitionpath": "asia/india/chennai"
+  },
+  {
+    "ts": 1611912414056,
+    "uuid": "47a7c0e0-8754-4f06-8631-a70a48d312e9",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.8742041526408587,
+    "begin_lon": 0.7528268153249502,
+    "end_lat": 0.9197827128888302,
+    "end_lon": 0.362464770874404,
+    "fare": 19.179139106643607,
+    "partitionpath": "americas/united_states/san_francisco"
+  },
+  {
+    "ts": 1611366666839,
+    "uuid": "35316817-43f0-4c2b-b3a4-68a701c5ad01",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.1856488085068272,
+    "begin_lon": 0.9694586417848392,
+    "end_lat": 0.38186367037201974,
+    "end_lon": 0.25252652214479043,
+    "fare": 33.92216483948643,
+    "partitionpath": "americas/united_states/san_francisco"
+  },
+  {
+    "ts": 1611628010507,
+    "uuid": "629506e1-8358-45f2-9e30-eb94d9938d66",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.0750588760043035,
+    "begin_lon": 0.03844104444445928,
+    "end_lat": 0.04376353354538354,
+    "end_lon": 0.6346040067610669,
+    "fare": 66.62084366450246,
+    "partitionpath": "americas/brazil/sao_paulo"
+  },
+  {
+    "ts": 1611758673226,
+    "uuid": "f789e4ba-5e9b-47db-a7c5-d0a6284743ab",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.651058505660742,
+    "begin_lon": 0.8192868687714224,
+    "end_lat": 0.20714896002914462,
+    "end_lon": 0.06224031095826987,
+    "fare": 41.06290929046368,
+    "partitionpath": "asia/india/chennai"
+  },
+  {
+    "ts": 1611660459834,
+    "uuid": "e8f03a54-f1ce-42d3-9c03-faf30bbefb2a",
+    "rider": "rider-213",
+    "driver": "driver-213",
+    "begin_lat": 0.11488393157088261,
+    "begin_lon": 0.6273212202489661,
+    "end_lat": 0.7454678537511295,
+    "end_lon": 0.3954939864908973,
+    "fare": 27.79478688582596,
+    "partitionpath": "americas/united_states/san_francisco"
+  }
+]

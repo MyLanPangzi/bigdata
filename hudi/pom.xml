@@ -15,7 +15,6 @@
         <scala.binary.version>2.12</scala.binary.version>
         <spark.version>3.0.1</spark.version>
         <hive-exec.version>2.3.8</hive-exec.version>
-        <jackson-databind.version>2.10.5.1</jackson-databind.version>
     </properties>
 
     <dependencies>
