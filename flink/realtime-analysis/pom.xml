@@ -3,64 +3,90 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.hiscat.flink</groupId>
-        <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+    <!--    <parent>-->
+    <!--        <groupId>com.hiscat.flink</groupId>-->
+    <!--        <artifactId>parent</artifactId>-->
+    <!--        <version>1.0-SNAPSHOT</version>-->
+    <!--        <relativePath>../pom.xml</relativePath>-->
+    <!--    </parent>-->
+    <groupId>com.hiscat.flink</groupId>
     <artifactId>realtime-analysis</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <flink.version>1.12.1</flink.version>
+        <scala.version>2.12</scala.version>
+        <log4j.version>2.12.1</log4j.version>
+
         <fastjson.version>1.2.73</fastjson.version>
         <sql-parser.version>1.0-SNAPSHOT</sql-parser.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <flink-connector-mysql-cdc.version>1.1.0</flink-connector-mysql-cdc.version>
         <hadoop-client.version>3.2.1</hadoop-client.version>
+        <flink-connector-clickhouse.version>1.11.0</flink-connector-clickhouse.version>
+        <hudi-java-client.version>0.7.0</hudi-java-client.version>
+        <avro.version>1.10.0</avro.version>
+        <parquet.version>1.11.1</parquet.version>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka_${scala.version}</artifactId>
+            <artifactId>flink-table-planner-blink_${scala.version}</artifactId>
             <version>${flink.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-elasticsearch6_${scala.version}</artifactId>
+            <artifactId>flink-clients_${scala.version}</artifactId>
             <version>${flink.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>log4j-api</artifactId>
-                    <groupId>org.apache.logging.log4j</groupId>
-                </exclusion>
-            </exclusions>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-jdbc_${scala.version}</artifactId>
+            <artifactId>flink-json</artifactId>
             <version>${flink.version}</version>
+            <scope>provided</scope>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-connector-kafka_${scala.version}</artifactId>-->
+        <!--            <version>${flink.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-connector-elasticsearch6_${scala.version}</artifactId>-->
+        <!--            <version>${flink.version}</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <artifactId>log4j-api</artifactId>-->
+        <!--                    <groupId>org.apache.logging.log4j</groupId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.alibaba.ververica</groupId>
-            <artifactId>flink-connector-mysql-cdc</artifactId>
-            <version>${flink-connector-mysql-cdc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>flink-connector-clickhouse</artifactId>
-            <version>1.11.0</version>
-        </dependency>
-
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-connector-jdbc_${scala.version}</artifactId>-->
+        <!--            <version>${flink.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba.ververica</groupId>
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+            <version>${flink-connector-mysql-cdc.version}</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.aliyun</groupId>-->
+        <!--            <artifactId>flink-connector-clickhouse</artifactId>-->
+        <!--            <version>${flink-connector-clickhouse.version}</version>-->
+        <!--        </dependency>-->
+
+
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
@@ -71,20 +97,77 @@
                     <artifactId>log4j</artifactId>
                     <groupId>log4j</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>jetty-servlet</artifactId>
+                    <groupId>org.eclipse.jetty</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jetty-webapp</artifactId>
+                    <groupId>org.eclipse.jetty</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jetty-util</artifactId>
+                    <groupId>org.eclipse.jetty</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>avro</artifactId>
+                    <groupId>org.apache.avro</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
+            <artifactId>avro</artifactId>
+            <groupId>org.apache.avro</groupId>
+            <version>${avro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.parquet</groupId>
+            <artifactId>parquet-avro</artifactId>
+            <version>${parquet.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-java-client</artifactId>
+            <version>${hudi-java-client.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>avro</artifactId>
+                    <groupId>org.apache.avro</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,7 +1,6 @@
 package com.hiscat.realtime.analysis
 
 import java.time.Duration
-
 import com.hiscat.flink.sql.parser.{DmlCommand, SqlCommandParser}
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api.bridge.scala._
@@ -10,8 +9,11 @@ import org.apache.flink.types.Row
 object SqlJobSubmitter {
 
   def main(args: Array[String]): Unit = {
+    System.setProperty("HADOOP_USER_NAME", "hdp")
+
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val tEnv = StreamTableEnvironment.create(env)
+    env.setParallelism(1)
     tEnv.getConfig.setIdleStateRetention(Duration.ofDays(1))
     tEnv.getConfig.getConfiguration.setString("table.optimizer.distinct-agg.split.enabled", "true")
 

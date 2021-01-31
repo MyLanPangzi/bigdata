@@ -1,118 +1,78 @@
-CREATE TABLE clickhouse_order_detail
+CREATE TABLE datagen
 (
-    id                    BIGINT NOT NULL,
-    order_id              BIGINT,
-    sku_id                BIGINT,
-    province_id           INT,
-    user_id               BIGINT,
-    order_price           DECIMAL(10, 2),
-    sku_num               INT,
-    create_time           TIMESTAMP(3),
-    source_type           VARCHAR(20),
-    source_id             BIGINT,
-    consignee             VARCHAR(100),
-    consignee_tel         VARCHAR(20),
-    final_detail_amount   DECIMAL(10, 2),
-    final_total_amount    DECIMAL(16, 2),
-    order_status          VARCHAR(20),
-    delivery_address      VARCHAR(1000),
-    order_comment         VARCHAR(200),
-    out_trade_no          VARCHAR(50),
-    trade_body            VARCHAR(200),
-    operate_time          TIMESTAMP(3),
-    expire_time           TIMESTAMP(3),
-    tracking_no           VARCHAR(100),
-    parent_order_id       BIGINT,
-    benefit_reduce_amount DECIMAL(16, 2),
-    original_total_amount DECIMAL(16, 2),
-    feight_fee            DECIMAL(16, 2),
-    price                 VARCHAR(200),
-    weight                VARCHAR(200),
-    sku_name              VARCHAR(200),
-    sku_desc              VARCHAR(2000),
-    sku_default_img       VARCHAR(200),
-    spu_id                BIGINT,
-    spu_name              VARCHAR(200),
-    description           VARCHAR(1000),
-    tm_id                 BIGINT,
-    tm_name               VARCHAR(20),
-    category3_id          BIGINT,
-    category3_name        VARCHAR(200),
-    category2_id          BIGINT,
-    category2_name        VARCHAR(200),
-    category1_id          BIGINT,
-    category1_name        VARCHAR(200),
-    sku_create_time       TIMESTAMP(3),
-    PRIMARY KEY (id) NOT ENFORCED
-) WITH (
-    'connector' = 'clickhouse',
-    'url' = 'clickhouse://hadoop102:8123',
-    'username' = 'test',
-    'password' = '00000',
-    'database-name' = 'dwd',
-    'table-name' = 'order_detail',
-    'sink.batch-size' = '1000',
-    'sink.flush-interval' = '1000',
-    'sink.max-retries' = '3',
-    'sink.write-local' = 'true',
-    'sink.partition-strategy' = 'hash',
-    'sink.partition-key' = 'id',
-    'sink.ignore-delete' = 'true'
+    id      BIGINT PRIMARY KEY NOT ENFORCED,
+    name    STRING,
+    `year`  INT,
+    `month` INT,
+    `day`   INT,
+    ts      TIMESTAMP
+) WITH(
+    'connector' = 'datagen',
+    'fields.id.min' = '1',
+    'fields.id.max' = '999999999',
+    'fields.name.length' = '10',
+    'fields.year.min' = '2000',
+    'fields.year.max' = '2010',
+    'fields.month.min' = '1',
+    'fields.month.max' = '12',
+    'fields.day.min' = '1',
+    'fields.day.max' = '31',
+    'rows-per-second' = '2'
 );
-CREATE TABLE kafka_order_detail
+-- CREATE TABLE print WITH( 'connector' = 'print' )
+-- LIKE student ( EXCLUDING ALL);
+
+CREATE TABLE student
 (
-    id                    BIGINT NOT NULL,
-    order_id              BIGINT,
-    sku_id                BIGINT,
-    province_id           INT,
-    user_id               BIGINT,
-    order_price           DECIMAL(10, 2),
-    sku_num               INT,
-    create_time           TIMESTAMP(3),
-    source_type           VARCHAR(20),
-    source_id             BIGINT,
-    consignee             VARCHAR(100),
-    consignee_tel         VARCHAR(20),
-    final_detail_amount   DECIMAL(10, 2),
-    final_total_amount    DECIMAL(16, 2),
-    order_status          VARCHAR(20),
-    delivery_address      VARCHAR(1000),
-    order_comment         VARCHAR(200),
-    out_trade_no          VARCHAR(50),
-    trade_body            VARCHAR(200),
-    operate_time          TIMESTAMP(3),
-    expire_time           TIMESTAMP(3),
-    tracking_no           VARCHAR(100),
-    parent_order_id       BIGINT,
-    benefit_reduce_amount DECIMAL(16, 2),
-    original_total_amount DECIMAL(16, 2),
-    feight_fee            DECIMAL(16, 2),
-    price                 VARCHAR(200),
-    weight                VARCHAR(200),
-    sku_name              VARCHAR(200),
-    sku_desc              VARCHAR(2000),
-    sku_default_img       VARCHAR(200),
-    spu_id                BIGINT,
-    spu_name              VARCHAR(200),
-    description           VARCHAR(1000),
-    tm_id                 BIGINT,
-    tm_name               VARCHAR(20),
-    category3_id          BIGINT,
-    category3_name        VARCHAR(200),
-    category2_id          BIGINT,
-    category2_name        VARCHAR(200),
-    category1_id          BIGINT,
-    category1_name        VARCHAR(200),
-    sku_create_time       TIMESTAMP(3),
-    primary key (id) not enforced
-)WITH(
- 'connector' = 'upsert-kafka',
-  'topic' = 'dwd_order_detail',
-  'properties.bootstrap.servers' = 'hadoop102:9092',
-  'key.format' = 'json',
-  'value.format' = 'json'
+    id          BIGINT PRIMARY KEY NOT ENFORCED ,
+    name        VARCHAR(20),
+    create_time TIMESTAMP(3)
+) WITH (
+ 'connector' = 'mysql-cdc',
+ 'server-time-zone' = 'Asia/Shanghai',
+ 'hostname' = 'hdp10',
+ 'port' = '3306',
+ 'username' = 'root',
+ 'password' = 'Hdp10Hdp10@',
+ 'database-name' = 'flink',
+ 'table-name' = 'student'
 );
 
-INSERT INTO clickhouse_order_detail
-SELECT *
-FROM kafka_order_detail;
+CREATE TABLE hudi
+(
+    id      BIGINT PRIMARY KEY NOT ENFORCED,
+    name    STRING,
+    create_time TIMESTAMP(3),
+    `year`  BIGINT,
+    `month` BIGINT,
+    `day`   BIGINT
+) PARTITIONED BY (`year`,`month`,`day`) WITH (
+    'connector' = 'hudi',
+    'base-path' = 'hdfs://hdp10:8020/student',
+    'table-name' = 'student',
+    'precombine-field-prop' = 'create_time',
+    'format' = 'json',
+    'schema' = '{
+              "type": "record",
+              "name": "test",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "create_time",
+                  "type": "string"
+                }
+              ]
+            }'
+);
+
+-- INSERT INTO print SELECT * FROM student;
+-- INSERT INTO print SELECT * FROM datagen;
+-- INSERT INTO hudi SELECT * FROM datagen;
+INSERT INTO hudi SELECT id, name, create_time,YEAR(create_time),MONTH(create_time),DAYOFMONTH(create_time) FROM student;
