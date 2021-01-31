@@ -5,9 +5,10 @@ import org.apache.flink.metrics.MetricGroup
 import org.apache.flink.streaming.api.functions.sink.{RichSinkFunction, SinkFunction}
 import org.apache.flink.table.data.RowData.FieldGetter
 import org.apache.flink.table.data.{RowData, TimestampData}
+import org.apache.flink.types.RowKind
 import org.apache.flink.util.UserCodeClassLoader
 import org.apache.hadoop.conf.Configuration
-import org.apache.hudi.client.HoodieJavaWriteClient
+import org.apache.hudi.client.{HoodieJavaWriteClient, WriteStatus}
 import org.apache.hudi.client.common.HoodieJavaEngineContext
 import org.apache.hudi.common.HoodieJsonPayload
 import org.apache.hudi.common.model.{HoodieKey, HoodieRecord}
@@ -51,28 +52,37 @@ case class HudiDynamicTableSinkFunction(
   }
 
   override def invoke(value: RowData, context: SinkFunction.Context): Unit = {
-    val json = new String(serializer.serialize(value))
     val key = pkGetters.map(e => e.getFieldOrNull(value)).mkString("_")
-    val partition = partitionGetters.map(e => e.getFieldOrNull(value)).mkString("/")
-    val data = preCombineKeyGetter.getFieldOrNull(value)
-    val preCombineKey = data match {
-      case t: TimestampData => t.getMillisecond
-      case l: java.lang.Long => l
-      case _ => throw new RuntimeException("unsupported pre combine key type")
-    }
+    //    val data = preCombineKeyGetter.getFieldOrNull(value)
+    //    val preCombineKey = data match {
+    //      case t: TimestampData => t.getMillisecond
+    //      case l: java.lang.Long => l
+    //      case _ => throw new RuntimeException("unsupported pre combine key type")
+    //    }
     val instantTime = client.startCommit()
-    //    client.upsert()
-    println(s"hudi invoke ${key} ${partition} ${preCombineKey} ${json}")
-    val statuses = client.upsert(
-      Collections.singletonList(
-        new HoodieRecord(
-          new HoodieKey(key, partition),
-          new HoodieJsonPayload(json)
+    var statuses: java.util.List[WriteStatus] = null
+    val partitionPath = partitionGetters.map(e => e.getFieldOrNull(value)).mkString("/")
+    val hoodieKey = new HoodieKey(key, partitionPath)
+    value.getRowKind match {
+      case RowKind.DELETE =>
+        statuses = client.delete(Collections.singletonList(hoodieKey), instantTime)
+      case RowKind.INSERT | RowKind.UPDATE_AFTER =>
+        statuses = client.upsert(
+          Collections.singletonList(
+            new HoodieRecord(
+              hoodieKey,
+              new HoodieJsonPayload(new String(serializer.serialize(value)))
+            )
+          ),
+          instantTime
         )
-      ),
-      instantTime
-    )
-    client.commit(instantTime, statuses)
+      case _ =>
+    }
+    //    client.upsert()
+    //    println(s"hudi invoke ${key} ${partition} ${preCombineKey} ${json}")
+    if (statuses != null) {
+      client.commit(instantTime, statuses)
+    }
 
   }
 

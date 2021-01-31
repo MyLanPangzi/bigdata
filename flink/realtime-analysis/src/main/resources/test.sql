@@ -22,7 +22,7 @@ CREATE TABLE datagen
 -- CREATE TABLE print WITH( 'connector' = 'print' )
 -- LIKE student ( EXCLUDING ALL);
 
-CREATE TABLE student
+CREATE TABLE mysql_student
 (
     id          BIGINT PRIMARY KEY NOT ENFORCED ,
     name        VARCHAR(20),
@@ -75,4 +75,4 @@ CREATE TABLE hudi
 -- INSERT INTO print SELECT * FROM student;
 -- INSERT INTO print SELECT * FROM datagen;
 -- INSERT INTO hudi SELECT * FROM datagen;
-INSERT INTO hudi SELECT id, name, create_time,YEAR(create_time),MONTH(create_time),DAYOFMONTH(create_time) FROM student;
+INSERT INTO hudi SELECT id, name, create_time,YEAR(create_time),MONTH(create_time),DAYOFMONTH(create_time) FROM mysql_student;
